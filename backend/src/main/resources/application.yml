@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: miu-final-project
+  profiles:
+    active: dev
