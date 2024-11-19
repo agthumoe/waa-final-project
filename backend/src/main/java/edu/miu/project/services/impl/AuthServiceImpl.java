@@ -58,10 +58,12 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public User register(RegistrationRequest request) {
         final User user = new User(request.getEmail(), request.getName(), this.passwordEncoder.encode(request.getPassword()));
+        if ("ADMIN".equals(request.getAuthority())) {
+            throw new HttpStatusException("Nice try, you cannot register as an admin by yourself.", HttpStatus.FORBIDDEN);
+        }
         final Authority authority = this.authorityRepository.findByNameIgnoreCase(request.getAuthority()).orElseThrow(() -> new HttpStatusException("Invalid authority", HttpStatus.NOT_FOUND));
         user.getAuthorities().add(authority);
-        User saved =  this.userRepository.save(user);
-        return saved;
+        return this.userRepository.save(user);
     }
 
     @Override

@@ -2,7 +2,7 @@ package edu.miu.project.commons.services;
 
 import edu.miu.project.commons.models.MutableModel;
 
-public abstract class MutableServiceImpl<T extends MutableModel> extends ImmutableServiceImpl<T> implements MutableService<T> {
+public abstract class AbstractMutableService<T extends MutableModel> extends AbstractImmutableService<T> implements MutableService<T> {
     @Override
     public T update(T model) {
         return super.repository.save(model);

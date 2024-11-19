@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ImmutableServiceImpl<T extends ImmutableModel> implements ImmutableService<T> {
+public abstract class AbstractImmutableService<T extends ImmutableModel> implements ImmutableService<T> {
     protected AbstractRepository<T> repository;
 
     @Override

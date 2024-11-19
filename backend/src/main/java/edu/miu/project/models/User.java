@@ -30,6 +30,9 @@ public class User extends MutableModel implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Authority> authorities = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Rating> ratings = new ArrayList<>();
+
     @Override
     public String getUsername() {
         return this.email;

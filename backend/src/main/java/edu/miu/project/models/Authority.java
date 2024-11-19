@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class Authority extends Model implements GrantedAuthority {
 
     @ManyToMany(mappedBy = "authorities")
     @JsonIgnore
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     @Override
     public String getAuthority() {
