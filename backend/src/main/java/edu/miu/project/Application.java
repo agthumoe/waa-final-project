@@ -13,7 +13,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @OpenAPIDefinition(info = @Info(
 		title = "Mini Online Market API",
 		description = "Final Project for MIU WAA course by Aung Thu Moe",
-		version = "0.0.1"
+		version = "0.0.1",
+		contact = @io.swagger.v3.oas.annotations.info.Contact(
+				name = "Aung Thu Moe",
+				email = "amoe@miu.edu")
 ))
 @SecurityScheme(
 		name = "bearerAuth",
@@ -25,5 +28,4 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-
 }

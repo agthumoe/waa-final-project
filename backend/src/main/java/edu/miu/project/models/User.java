@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class User extends MutableModel implements UserDetails {
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, updatable = false)
     private String email;
 
     private String name;
@@ -23,8 +24,11 @@ public class User extends MutableModel implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(name = "approved_by")
+    private String approvedBy;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Authority> authorities;
+    private List<Authority> authorities = new ArrayList<>();
 
     @Override
     public String getUsername() {
