@@ -1,6 +1,7 @@
 package com.example.demo.commons.services;
 
 import com.example.demo.commons.models.ImmutableModel;
+import com.example.demo.commons.repositories.AbstractRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,4 +14,5 @@ public interface ImmutableService<T extends ImmutableModel> {
     Page<T> findAll(Pageable pageable);
     Optional<T> findOne(Long id);
     boolean exists(Long id);
+    AbstractRepository<T> getRepository();
 }

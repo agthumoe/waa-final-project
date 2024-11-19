@@ -2,6 +2,7 @@ package com.example.demo.commons.services;
 
 import com.example.demo.commons.models.ImmutableModel;
 import com.example.demo.commons.repositories.AbstractRepository;
+import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -34,5 +35,10 @@ public abstract class ImmutableServiceImpl<T extends ImmutableModel> implements 
     @Override
     public boolean exists(Long id) {
         return this.repository.existsById(id);
+    }
+
+    @Override
+    public AbstractRepository<T> getRepository() {
+        return this.repository;
     }
 }

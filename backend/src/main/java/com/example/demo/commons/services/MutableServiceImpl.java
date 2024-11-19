@@ -1,6 +1,7 @@
 package com.example.demo.commons.services;
 
 import com.example.demo.commons.models.MutableModel;
+import com.example.demo.commons.repositories.AbstractRepository;
 
 public abstract class MutableServiceImpl<T extends MutableModel> extends ImmutableServiceImpl<T> implements MutableService<T> {
     @Override
