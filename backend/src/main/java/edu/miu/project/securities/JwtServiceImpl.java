@@ -1,6 +1,6 @@
 package edu.miu.project.securities;
 
-import edu.miu.project.models.Authority;
+import edu.miu.project.models.Role;
 import edu.miu.project.models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -24,7 +24,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateAccessToken(User user) {
-        String authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.joining(","));
+        String authorities = user.getAuthorities().stream().map(Role::getName).collect(Collectors.joining(","));
         Map<String, String> claims = Map.of(
             "authorities", authorities,
             "type", "access-token"

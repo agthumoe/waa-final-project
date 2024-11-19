@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractImmutableService<T extends ImmutableModel> implements ImmutableService<T> {
-    protected AbstractRepository<T> repository;
+    protected final AbstractRepository<T> repository;
+
+    protected AbstractImmutableService(AbstractRepository<T> repository) {
+        this.repository = repository;
+    }
 
     @Override
     public T create(T t) {

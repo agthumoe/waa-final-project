@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -28,10 +30,15 @@ public class User extends MutableModel implements UserDetails {
     private String approvedBy;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Authority> authorities = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Rating> ratings = new ArrayList<>();
+
+    @Override
+    public List<Role> getAuthorities() {
+        return this.roles;
+    }
 
     @Override
     public String getUsername() {

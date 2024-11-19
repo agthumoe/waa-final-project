@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "authorities")
+@Table(name = "roles")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(exclude = "users")
-public class Authority extends Model implements GrantedAuthority {
+public class Role extends Model implements GrantedAuthority {
     private String name;
 
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "roles")
     @JsonIgnore
     private List<User> users = new ArrayList<>();
 

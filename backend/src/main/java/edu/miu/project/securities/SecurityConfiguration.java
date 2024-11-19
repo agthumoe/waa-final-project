@@ -44,9 +44,6 @@ public class SecurityConfiguration {
                         .requestMatchers(whiteLists).permitAll() // for open api documentation
                         .requestMatchers("/api/v1/login").permitAll()
                         .requestMatchers("/api/v1/register").permitAll()
-                        .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/api/v1/buyers/**").hasAnyAuthority("BUYER")
-                        .requestMatchers("/api/v1/sellers/**").hasAnyAuthority("SELLER")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

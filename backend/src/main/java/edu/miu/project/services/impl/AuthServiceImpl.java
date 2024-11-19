@@ -1,13 +1,13 @@
 package edu.miu.project.services.impl;
 
 import edu.miu.project.commons.exceptions.HttpStatusException;
-import edu.miu.project.models.Authority;
+import edu.miu.project.models.Role;
 import edu.miu.project.models.User;
 import edu.miu.project.models.dtos.AuthRequest;
 import edu.miu.project.models.dtos.AuthResponse;
 import edu.miu.project.models.dtos.RefreshTokenRequest;
 import edu.miu.project.models.dtos.RegistrationRequest;
-import edu.miu.project.repositories.AuthorityRepository;
+import edu.miu.project.repositories.RoleRepository;
 import edu.miu.project.repositories.UserRepository;
 import edu.miu.project.securities.JwtService;
 import edu.miu.project.securities.SecurityUtils;
@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
-    private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public AuthResponse authenticate(AuthRequest authRequest) {
@@ -58,11 +58,11 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public User register(RegistrationRequest request) {
         final User user = new User(request.getEmail(), request.getName(), this.passwordEncoder.encode(request.getPassword()));
-        if ("ADMIN".equals(request.getAuthority())) {
+        if ("ADMIN".equals(request.getRole())) {
             throw new HttpStatusException("Nice try, you cannot register as an admin by yourself.", HttpStatus.FORBIDDEN);
         }
-        final Authority authority = this.authorityRepository.findByNameIgnoreCase(request.getAuthority()).orElseThrow(() -> new HttpStatusException("Invalid authority", HttpStatus.NOT_FOUND));
-        user.getAuthorities().add(authority);
+        final Role role = this.roleRepository.findByNameIgnoreCase(request.getRole()).orElseThrow(() -> new HttpStatusException("Invalid role", HttpStatus.NOT_FOUND));
+        user.getAuthorities().add(role);
         return this.userRepository.save(user);
     }
 
