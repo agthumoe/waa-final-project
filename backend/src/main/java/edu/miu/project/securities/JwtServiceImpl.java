@@ -1,5 +1,7 @@
 package edu.miu.project.securities;
 
+import edu.miu.project.models.Authority;
+import edu.miu.project.models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtServiceImpl implements JwtService {
@@ -19,20 +23,25 @@ public class JwtServiceImpl implements JwtService {
     private long refreshTokenExpirationTime;
 
     @Override
-    public String generateAccessToken(String email) {
+    public String generateAccessToken(User user) {
+        String authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.joining(","));
+        Map<String, String> claims = Map.of(
+            "authorities", authorities,
+            "type", "access-token"
+        );
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getEmail())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpirationTime))
-                .claim("type", "access-token")
+                .claims(claims)
                 .signWith(getSignInKey())
                 .compact();
     }
 
     @Override
-    public String generateRefreshToken(String email) {
+    public String generateRefreshToken(User user) {
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getEmail())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpirationTime))
                 .claim("type", "refresh-token")
@@ -41,7 +50,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String getUsername(String accessToken) {
+    public String getEmail(String accessToken) {
         return Jwts.parser()
                 .verifyWith(getSignInKey())
                 .build()
