@@ -4,6 +4,7 @@ import edu.miu.project.commons.CustomMapper;
 import edu.miu.project.commons.exceptions.HttpStatusException;
 import edu.miu.project.models.Product;
 import edu.miu.project.models.dtos.ProductDetailedDto;
+import edu.miu.project.models.dtos.ProductDto;
 import edu.miu.project.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class ProductController {
     private final CustomMapper mapper;
 
     @GetMapping
-    public Page<Product> getAllProducts(
+    public Page<ProductDto> getAllProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) Double minPrice,
@@ -31,11 +32,13 @@ public class ProductController {
             @RequestParam(required = false) Integer minStock,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
-        return productService.getAllBy(name, description, minPrice, maxPrice, categoryId, subCategoryId, brandId, minStock, PageRequest.of(page, size));
+        return this.mapper.map(productService.getAllBy(name, description, minPrice, maxPrice, categoryId, subCategoryId, brandId, minStock, PageRequest.of(page, size)), ProductDto.class);
     }
 
     @GetMapping("{id}")
     public ProductDetailedDto getProductById(@PathVariable Long id) {
         return mapper.map(productService.findOne(id).orElseThrow(() -> new HttpStatusException("Product not found", 404)), ProductDetailedDto.class);
     }
+
+
 }

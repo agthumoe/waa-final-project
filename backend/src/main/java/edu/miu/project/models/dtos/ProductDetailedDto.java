@@ -13,8 +13,7 @@ public class ProductDetailedDto extends Dto {
     private String description;
     private double basePrice;
     private Boolean enabled;
-    private CategoryDto category;
-    private SubCategoryDto subCategory;
+    private SubCategoryDetailsDto subCategory;
     private BrandDto brand;
     private List<VariantDto> variants = List.of();
 }
