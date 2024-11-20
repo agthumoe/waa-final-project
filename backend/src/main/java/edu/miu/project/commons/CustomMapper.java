@@ -1,15 +1,12 @@
 package edu.miu.project.commons;
-import edu.miu.project.commons.exceptions.HttpStatusException;
+
 import edu.miu.project.models.Role;
 import edu.miu.project.repositories.RoleRepository;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.AbstractConverter;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

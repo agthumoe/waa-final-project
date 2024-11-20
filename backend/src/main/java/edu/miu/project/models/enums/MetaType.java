@@ -1,7 +1,8 @@
 package edu.miu.project.models.enums;
 
 public enum MetaType {
-    DEMOGRAPHIC,
+    GENDER,
+    AGE_GROUP,
     USAGE,
     OCCASION,
 }

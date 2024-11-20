@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -25,10 +26,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
     @Value("${app.security.cors.origins}")
     private List<String> origins;
@@ -36,6 +38,14 @@ public class SecurityConfiguration {
     private final ObjectMapper objectMapper;
 
     private static final String[] whiteLists = {"/swagger-ui/**", "/v3/api-docs/**", "/error"};
+    private static final String[] publicGetEndpoints = {
+            "/api/v1/categories",
+            "/api/v1/brands",
+            "/api/v1/metas",
+            "/api/v1/subcategories",
+            "/api/v1/products",
+            "/api/v1/products/{id}",
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,6 +54,8 @@ public class SecurityConfiguration {
                         .requestMatchers(whiteLists).permitAll() // for open api documentation
                         .requestMatchers("/api/v1/login").permitAll()
                         .requestMatchers("/api/v1/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, publicGetEndpoints).permitAll()
+                        .requestMatchers("/api/v1/categories/{id}/subcategories").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -72,7 +84,7 @@ public class SecurityConfiguration {
         return (HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) -> {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType("application/json");
-            response.getWriter().write(this.objectMapper.writeValueAsString(new ErrorResponse(401, "Unauthorized") {
+            response.getWriter().write(this.objectMapper.writeValueAsString(new ErrorResponse(401, "You are unauthorized to use this resource.") {
             }));
         };
     }

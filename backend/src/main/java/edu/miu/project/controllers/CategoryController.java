@@ -25,11 +25,8 @@ public class CategoryController {
     private final CustomMapper mapper;
 
     @GetMapping
-    public ResponseEntity<?> findAll(@RequestParam(required = false) Pageable pageable) {
-        if (pageable != null) {
-            return ResponseEntity.ok(this.mapper.map(categoryService.findAll(pageable), CategoryDto.class));
-        }
-        return ResponseEntity.ok(this.mapper.map(categoryService.findAll(), CategoryDto.class));
+    public ResponseEntity<?> findAll(Pageable pageable) {
+        return ResponseEntity.ok(this.mapper.map(categoryService.findAll(pageable), CategoryDto.class));
     }
 
     @PostMapping

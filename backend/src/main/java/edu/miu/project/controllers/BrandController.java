@@ -24,10 +24,7 @@ public class BrandController {
     private final CustomMapper mapper;
 
     @GetMapping
-    public ResponseEntity<?> findAll(@RequestParam(required = false) Pageable pageable) {
-        if (pageable == null) {
-            return ResponseEntity.ok(this.mapper.map(brandService.findAll(), BrandDto.class));
-        }
+    public ResponseEntity<?> findAll(Pageable pageable) {
         return ResponseEntity.ok(this.mapper.map(brandService.findAll(pageable), BrandDto.class));
     }
 

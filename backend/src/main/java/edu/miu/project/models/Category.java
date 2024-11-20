@@ -1,7 +1,6 @@
 package edu.miu.project.models;
 
 import edu.miu.project.commons.models.MutableModel;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,6 +16,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Category extends MutableModel {
     private String name;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category")
     private List<SubCategory> subCategories = new ArrayList<>();
 }

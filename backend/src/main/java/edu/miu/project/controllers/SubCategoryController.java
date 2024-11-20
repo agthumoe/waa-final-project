@@ -22,26 +22,20 @@ public class SubCategoryController {
     private final CustomMapper mapper;
 
     @GetMapping("/subcategories")
-    public ResponseEntity<?> findAll(@RequestParam(required = false) Pageable pageable) {
-        if (pageable != null) {
-            return ResponseEntity.ok(this.mapper.map(subCategoryService.findAll(pageable), SubCategoryDto.class));
-        }
-        return ResponseEntity.ok(this.mapper.map(subCategoryService.findAll(), SubCategoryDto.class));
+    public ResponseEntity<?> findAll(Pageable pageable) {
+        return ResponseEntity.ok(this.mapper.map(subCategoryService.findAll(pageable), SubCategoryDto.class));
     }
 
     @GetMapping("/categories/{id}/subcategories")
-    public ResponseEntity<?> findByCategory(@PathVariable Long id, @RequestParam(required = false) Pageable pageable) {
-        if (pageable != null) {
-            return ResponseEntity.ok(this.mapper.map(subCategoryService.findAllByCategoryId(id, pageable), SubCategoryDto.class));
-        }
-        return ResponseEntity.ok(this.mapper.map(subCategoryService.findAllByCategoryId(id), SubCategoryDto.class));
+    public ResponseEntity<?> findByCategory(@PathVariable Long id, Pageable pageable) {
+        return ResponseEntity.ok(this.mapper.map(subCategoryService.findAllByCategoryId(id, pageable), SubCategoryDto.class));
     }
 
-    @PostMapping("/subcategories")
+    @PostMapping("/categories/{id}/subcategories")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
-    public SubCategoryDto create(@RequestBody SubCategoryDto subCategoryDto) {
-        return this.mapper.map(this.subCategoryService.create(this.mapper.map(subCategoryDto, SubCategory.class)), SubCategoryDto.class);
+    public SubCategoryDto create(@PathVariable Long id, @RequestBody SubCategoryDto subCategoryDto) {
+        return this.mapper.map(this.subCategoryService.create(this.mapper.map(subCategoryDto, SubCategory.class), id), SubCategoryDto.class);
     }
 
     @PutMapping("/subcategories/{id}")

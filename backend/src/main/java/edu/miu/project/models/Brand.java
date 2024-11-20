@@ -1,7 +1,6 @@
 package edu.miu.project.models;
 
 import edu.miu.project.commons.models.MutableModel;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;

@@ -5,8 +5,6 @@ import edu.miu.project.commons.exceptions.HttpStatusException;
 import edu.miu.project.models.User;
 import edu.miu.project.models.dtos.UserDto;
 import edu.miu.project.models.dtos.UserRequest;
-import edu.miu.project.repositories.RoleRepository;
-import edu.miu.project.services.RoleService;
 import edu.miu.project.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,10 +25,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
     private final CustomMapper mapper;
-    private final RoleService roleService;
 
     @GetMapping
-    public Page<UserDto> findAll(@RequestParam Pageable pageable) {
+    public Page<UserDto> findAll(Pageable pageable) {
         return this.mapper.map(this.userService.findAll(pageable), UserDto.class);
     }
 

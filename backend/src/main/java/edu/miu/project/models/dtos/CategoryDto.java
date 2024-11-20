@@ -1,7 +1,6 @@
 package edu.miu.project.models.dtos;
 
 import edu.miu.project.commons.dtos.Dto;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
