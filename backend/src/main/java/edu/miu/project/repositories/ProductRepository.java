@@ -5,16 +5,19 @@ import edu.miu.project.models.Product;
 import edu.miu.project.models.dtos.ProductDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends AbstractRepository<Product> {
-    @Query("select new edu.miu.project.models.dtos.ProductDto(p, s.name, s.id, c.name, c.id, b.name, b.id, sum(v.stock)) from Product p join p.subCategory s join s.category c join p.brand b left join p.variants v group by p.id, s.id, c.id, b.id")
-    Page<ProductDto> getAllBy(Pageable pageable);
+//    @Query("select new edu.miu.project.models.dtos.ProductDto(p, s.name, s.id, c.name, c.id, b.name, b.id, sum(v.stock)) from Product p join p.subCategory s join s.category c join p.brand b left join p.variants v group by p.id, s.id, c.id, b.id")
+//    Page<ProductDto> getAllBy(Pageable pageable);
 
     @EntityGraph(attributePaths = {"subCategory", "subCategory.category", "brand", "variants"})
     Optional<Product> findById(Long id);

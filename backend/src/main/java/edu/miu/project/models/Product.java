@@ -25,6 +25,8 @@ public class Product extends MutableModel {
     private double basePrice;
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean enabled = true;
+    @Transient
+    private Long stock;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private SubCategory subCategory;
