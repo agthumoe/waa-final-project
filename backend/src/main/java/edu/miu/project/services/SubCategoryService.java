@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface SubCategoryService extends MutableService<SubCategory> {
     Page<SubCategory> findAllByCategoryId(Long categoryId, Pageable pageable);
+
     SubCategory create(SubCategory subCategory, Long categoryId);
 }

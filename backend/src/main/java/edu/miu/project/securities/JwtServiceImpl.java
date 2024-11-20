@@ -26,8 +26,8 @@ public class JwtServiceImpl implements JwtService {
     public String generateAccessToken(User user) {
         String authorities = user.getAuthorities().stream().map(Role::getName).collect(Collectors.joining(","));
         Map<String, String> claims = Map.of(
-            "authorities", authorities,
-            "type", "access-token"
+                "authorities", authorities,
+                "type", "access-token"
         );
         return Jwts.builder()
                 .subject(user.getEmail())

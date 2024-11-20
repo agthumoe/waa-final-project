@@ -10,9 +10,14 @@ import java.util.Optional;
 
 public interface ImmutableService<T extends ImmutableModel> {
     T create(T t);
+
     List<T> findAll();
+
     Page<T> findAll(Pageable pageable);
+
     Optional<T> findOne(Long id);
+
     boolean exists(Long id);
+
     AbstractRepository<T> getRepository();
 }

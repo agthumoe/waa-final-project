@@ -1,8 +1,6 @@
 package edu.miu.project.models.dtos;
 
 import edu.miu.project.commons.dtos.Dto;
-import edu.miu.project.models.Brand;
-import edu.miu.project.models.Product;
 import edu.miu.project.models.SubCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

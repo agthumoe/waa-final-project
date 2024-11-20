@@ -11,24 +11,24 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
 @OpenAPIDefinition(info = @Info(
-		title = "Mini Online Market API",
-		description = "Final Project for MIU WAA course by Aung Thu Moe",
-		version = "0.0.1",
-		contact = @Contact(
-				name = "Aung Thu Moe",
-				email = "amoe@miu.edu")
+        title = "Mini Online Market API",
+        description = "Final Project for MIU WAA course by Aung Thu Moe",
+        version = "0.0.1",
+        contact = @Contact(
+                name = "Aung Thu Moe",
+                email = "amoe@miu.edu")
 ))
 @SecurityScheme(
-		name = "bearerAuth",
-		type = SecuritySchemeType.HTTP,
-		bearerFormat = "JWT",
-		scheme = "bearer"
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer"
 )
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
 public class Application {
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }

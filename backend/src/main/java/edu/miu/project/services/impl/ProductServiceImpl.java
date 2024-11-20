@@ -3,14 +3,12 @@ package edu.miu.project.services.impl;
 import edu.miu.project.commons.repositories.AbstractRepository;
 import edu.miu.project.commons.services.AbstractMutableService;
 import edu.miu.project.models.Product;
-import edu.miu.project.models.dtos.ProductDto;
 import edu.miu.project.repositories.ProductRepository;
 import edu.miu.project.services.ProductService;
 import edu.miu.project.specifications.ProductSpecificationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +36,7 @@ public class ProductServiceImpl extends AbstractMutableService<Product> implemen
     }
 
     @Override
-    public Page<Product> getAllBy(Specification<Product> specification, Integer minStock, Pageable pageable) {
-        return specificationHelper.findAllBySpecification(specification, minStock, pageable);
+    public Page<Product> getAllBy(String name, String description, Double minPrice, Double maxPrice, Long categoryId, Long subCategoryId, Long brandId, Integer minStock, Pageable pageable) {
+        return specificationHelper.findAllBySpecification(name, description, minPrice, maxPrice, categoryId, subCategoryId, brandId, minStock, pageable);
     }
 }

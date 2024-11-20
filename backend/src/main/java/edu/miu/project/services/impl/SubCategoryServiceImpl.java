@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SubCategoryServiceImpl extends AbstractMutableService<SubCategory> implements SubCategoryService {
     private final CategoryRepository categoryRepository;
+
     @Autowired
     protected SubCategoryServiceImpl(AbstractRepository<SubCategory> repository, CategoryRepository categoryRepository) {
         super(repository);

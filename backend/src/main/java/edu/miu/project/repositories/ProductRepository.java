@@ -2,14 +2,7 @@ package edu.miu.project.repositories;
 
 import edu.miu.project.commons.repositories.AbstractRepository;
 import edu.miu.project.models.Product;
-import edu.miu.project.models.dtos.ProductDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl extends AbstractMutableService<User> implements UserService {
     private final RoleRepository roleRepository;
+
     @Autowired
     protected UserServiceImpl(AbstractRepository<User> repository, RoleRepository roleRepository) {
         super(repository);

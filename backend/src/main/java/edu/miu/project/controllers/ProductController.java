@@ -5,7 +5,6 @@ import edu.miu.project.commons.exceptions.HttpStatusException;
 import edu.miu.project.models.Product;
 import edu.miu.project.models.dtos.ProductDetailedDto;
 import edu.miu.project.services.ProductService;
-import edu.miu.project.specifications.QueryBuilder;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,7 +31,7 @@ public class ProductController {
             @RequestParam(required = false) Integer minStock,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
-        return productService.getAllBy(QueryBuilder.filterProduct(name, description, minPrice, maxPrice, categoryId, subCategoryId, brandId), minStock, PageRequest.of(page, size));
+        return productService.getAllBy(name, description, minPrice, maxPrice, categoryId, subCategoryId, brandId, minStock, PageRequest.of(page, size));
     }
 
     @GetMapping("{id}")
