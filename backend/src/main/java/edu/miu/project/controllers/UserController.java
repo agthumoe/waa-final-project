@@ -5,14 +5,17 @@ import edu.miu.project.commons.exceptions.HttpStatusException;
 import edu.miu.project.models.User;
 import edu.miu.project.models.dtos.UserDto;
 import edu.miu.project.models.dtos.UserRequest;
+import edu.miu.project.repositories.RoleRepository;
+import edu.miu.project.services.RoleService;
 import edu.miu.project.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,12 +23,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 @SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Users", description = "User endpoints for the application")
 public class UserController {
     private final UserService userService;
     private final CustomMapper mapper;
+    private final RoleService roleService;
 
     @GetMapping
-    public Page<UserDto> findAll(Pageable pageable) {
+    public Page<UserDto> findAll(@RequestParam Pageable pageable) {
         return this.mapper.map(this.userService.findAll(pageable), UserDto.class);
     }
 
@@ -36,8 +41,9 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto create(UserRequest request) {
-        return this.mapper.map(this.userService.create(mapper.map(request, User.class)), UserDto.class);
+    public UserDto create(@RequestBody @Validated UserRequest request) {
+        User user = mapper.map(request, User.class);
+        return this.mapper.map(this.userService.create(user, request.getRoles()), UserDto.class);
     }
 
     @DeleteMapping("{id}")
@@ -48,7 +54,7 @@ public class UserController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Long id, UserRequest request) {
+    public void update(@PathVariable Long id, @RequestBody @Validated UserRequest request) {
         User user = this.userService.findOne(id).orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND));
         this.mapper.map(request, user);
         this.userService.update(user);

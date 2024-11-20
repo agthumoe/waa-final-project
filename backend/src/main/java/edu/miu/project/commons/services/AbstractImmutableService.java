@@ -4,6 +4,7 @@ import edu.miu.project.commons.models.ImmutableModel;
 import edu.miu.project.commons.repositories.AbstractRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ public abstract class AbstractImmutableService<T extends ImmutableModel> impleme
     }
 
     @Override
+    @Transactional
     public T create(T t) {
         return this.repository.save(t);
     }

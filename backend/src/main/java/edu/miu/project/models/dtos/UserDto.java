@@ -12,5 +12,5 @@ public class UserDto extends Dto {
     private String name;
     private String email;
     private String approvedBy;
-    private List<String> authorities;
+    private List<String> roles;
 }

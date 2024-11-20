@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,18 +19,18 @@ public class AuthenticationController {
     private final CustomMapper mapper;
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody @Valid AuthRequest authRequest) {
+    public AuthResponse login(@RequestBody @Validated AuthRequest authRequest) {
         return this.authService.authenticate(authRequest);
     }
 
     @PostMapping("/refresh")
     @SecurityRequirement(name = "bearerAuth")
-    public AuthResponse refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
+    public AuthResponse refreshToken(@RequestBody @Validated RefreshTokenRequest request) {
         return this.authService.refresh(request);
     }
 
     @PostMapping("/register")
-    public UserDto register(@RequestBody @Valid RegistrationRequest request) {
+    public UserDto register(@RequestBody @Validated RegistrationRequest request) {
         return this.mapper.map(this.authService.register(request), UserDto.class);
     }
 
