@@ -15,5 +15,7 @@ public class ProductDetailedDto extends Dto {
     private Boolean enabled;
     private SubCategoryDetailsDto subCategory;
     private BrandDto brand;
+    private UserBriefDto seller;
     private List<VariantDto> variants = List.of();
+    private FileDto file;
 }

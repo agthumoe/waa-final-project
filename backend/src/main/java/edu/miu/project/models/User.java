@@ -1,5 +1,6 @@
 package edu.miu.project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.project.commons.models.MutableModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -28,15 +29,35 @@ public class User extends MutableModel implements UserDetails {
     private String approvedBy;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Rating> ratings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Product> products = new ArrayList<>();
+
+    @OneToOne(mappedBy = "buyer", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Cart cart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Address> addresses = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "file_id")
+    @JsonIgnore
+    private File file;
 
     @Override
     public List<Role> getAuthorities() {
         return this.roles;
     }
+
 
     @Override
     public String getUsername() {

@@ -21,4 +21,5 @@ public class UserRequest {
     private String password;
     @NotEmpty
     private List<String> roles = new ArrayList<>();
+    private Long fileId;
 }

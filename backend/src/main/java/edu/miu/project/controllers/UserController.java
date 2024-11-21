@@ -40,7 +40,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto create(@RequestBody @Validated UserRequest request) {
         User user = mapper.map(request, User.class);
-        return this.mapper.map(this.userService.create(user, request.getRoles()), UserDto.class);
+        return this.mapper.map(this.userService.create(user, request.getRoles(), request.getFileId()), UserDto.class);
     }
 
     @DeleteMapping("{id}")

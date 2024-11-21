@@ -37,7 +37,7 @@ public class SecurityConfiguration {
     private final JwtFilter jwtFilter;
     private final ObjectMapper objectMapper;
 
-    private static final String[] whiteLists = {"/swagger-ui/**", "/v3/api-docs/**", "/error"};
+    private static final String[] whiteLists = {"/swagger-ui/**", "/v3/api-docs/**", "/error", "/actuator/**"};
     private static final String[] publicGetEndpoints = {
             "/api/v1/categories",
             "/api/v1/brands",
@@ -56,7 +56,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/register").permitAll()
                         .requestMatchers(HttpMethod.GET, publicGetEndpoints).permitAll()
                         .requestMatchers("/api/v1/categories/{id}/subcategories").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(request -> {

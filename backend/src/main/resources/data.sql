@@ -1,14 +1,14 @@
-INSERT INTO users (created_at, created_by, last_modified_at, last_modified_by, name, email, password)
+INSERT INTO users (created_at, created_by, last_modified_at, last_modified_by, name, email, password, approved_by)
 VALUES (now(), 'system', now(), 'system', 'Alice', 'alice@gmail.com',
-        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq'),
+        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq', 'system'),
        (now(), 'system', now(), 'system', 'Berry', 'berry@gmail.com',
-        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq'),
+        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq', 'system'),
        (now(), 'system', now(), 'system', 'Clark', 'clark@gmail.com',
-        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq'),
+        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq', 'system'),
        (now(), 'system', now(), 'system', 'Diana', 'diana@gmail.com',
-        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq'),
+        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq', 'system'),
        (now(), 'system', now(), 'system', 'Elliot', 'elliot@gmail.com',
-        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq');
+        '$2a$10$kbAybEmK.q0H4AyDy/.PouLUK4owgIFIc.Wts0oAV4YSBrc41pAWq', 'system');
 
 INSERT INTO roles (name)
 VALUES ('ROLE_ADMIN'),
@@ -18,11 +18,13 @@ VALUES ('ROLE_ADMIN'),
 INSERT INTO users_roles (users_id, roles_id)
 VALUES (1, 1),
        (1, 2),
+       (1, 3),
        (2, 2),
        (3, 1),
        (3, 2),
        (4, 1),
-       (5, 2);
+       (4, 3),
+       (5, 3);
 
 -- Insert sample data into brands
 INSERT INTO brands (name, created_at, last_modified_at, created_by, last_modified_by)
@@ -144,81 +146,79 @@ VALUES
 ('Birthday', 'OCCASION', NOW(), NOW(), 'system', 'system'),
 ('Anniversary', 'OCCASION', NOW(), NOW(), 'system', 'system');
 
-INSERT INTO products (name, description, base_price, brand_id, sub_category_id, created_at, last_modified_at,
-                      created_by, last_modified_by)
-VALUES
+INSERT INTO products (seller_id, name, description, base_price, brand_id, sub_category_id, created_at, last_modified_at, created_by, last_modified_by) VALUES
 -- Clothing
-('Premium Cotton T-Shirt', 'Soft and breathable cotton t-shirt for everyday use', 25.99, 1, 1, NOW(), NOW(),
+(5, 'Premium Cotton T-Shirt', 'Soft and breathable cotton t-shirt for everyday use', 25.99, 1, 1, NOW(), NOW(),
  'anonymousUser', 'anonymousUser'),
-('Slim Fit Formal Shirt', 'Smart formal shirt suitable for office wear', 45.99, 2, 2, NOW(), NOW(), 'anonymousUser',
+(5, 'Slim Fit Formal Shirt', 'Smart formal shirt suitable for office wear', 45.99, 2, 2, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Evening Gown', 'Elegant evening gown perfect for parties', 120.00, 3, 3, NOW(), NOW(), 'anonymousUser',
+(5, 'Evening Gown', 'Elegant evening gown perfect for parties', 120.00, 3, 3, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Accessories
-('Leather Wallet', 'Compact and stylish wallet made from genuine leather', 30.50, 4, 4, NOW(), NOW(), 'anonymousUser',
+(5, 'Leather Wallet', 'Compact and stylish wallet made from genuine leather', 30.50, 4, 4, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Sun Hat', 'Lightweight and comfortable hat for sunny days', 15.00, 5, 5, NOW(), NOW(), 'anonymousUser',
+(5, 'Sun Hat', 'Lightweight and comfortable hat for sunny days', 15.00, 5, 5, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Crystal Pendant Necklace', 'Exquisite necklace with a crystal pendant', 75.99, 6, 6, NOW(), NOW(), 'anonymousUser',
+(5, 'Crystal Pendant Necklace', 'Exquisite necklace with a crystal pendant', 75.99, 6, 6, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Footwear
-('Casual Sneakers', 'Trendy sneakers perfect for casual outings', 55.00, 7, 7, NOW(), NOW(), 'anonymousUser',
+(5, 'Casual Sneakers', 'Trendy sneakers perfect for casual outings', 55.00, 7, 7, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Oxford Formal Shoes', 'Elegant leather shoes for formal occasions', 85.00, 8, 8, NOW(), NOW(), 'anonymousUser',
+(5, 'Oxford Formal Shoes', 'Elegant leather shoes for formal occasions', 85.00, 8, 8, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Beach Sandals', 'Durable and comfortable sandals for the beach', 20.00, 9, 9, NOW(), NOW(), 'anonymousUser',
+(5, 'Beach Sandals', 'Durable and comfortable sandals for the beach', 20.00, 9, 9, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Outdoor Gear
-('Waterproof Jacket', 'Lightweight and waterproof jacket for hiking', 100.00, 10, 10, NOW(), NOW(), 'anonymousUser',
+(5, 'Waterproof Jacket', 'Lightweight and waterproof jacket for hiking', 100.00, 10, 10, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Polarized Sunglasses', 'Stylish and protective sunglasses for outdoor activities', 60.00, 11, 11, NOW(), NOW(),
+(5, 'Polarized Sunglasses', 'Stylish and protective sunglasses for outdoor activities', 60.00, 11, 11, NOW(), NOW(),
  'anonymousUser', 'anonymousUser'),
-('Travel Backpack', 'Spacious and durable backpack for traveling', 80.00, 12, 12, NOW(), NOW(), 'anonymousUser',
+(5, 'Travel Backpack', 'Spacious and durable backpack for traveling', 80.00, 12, 12, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Kids Wear
-('Kids Graphic T-Shirt', 'Fun and colorful t-shirt for kids', 18.99, 13, 13, NOW(), NOW(), 'anonymousUser',
+(5, 'Kids Graphic T-Shirt', 'Fun and colorful t-shirt for kids', 18.99, 13, 13, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Kids Sports Shoes', 'Comfortable and durable shoes for kids', 35.00, 14, 14, NOW(), NOW(), 'anonymousUser',
+(5, 'Kids Sports Shoes', 'Comfortable and durable shoes for kids', 35.00, 14, 14, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Additional Clothing Products
-('Classic Polo Shirt', 'Timeless polo shirt made with premium fabric', 30.00, 1, 1, NOW(), NOW(), 'anonymousUser',
+(5, 'Classic Polo Shirt', 'Timeless polo shirt made with premium fabric', 30.00, 1, 1, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Cotton Casual Shirt', 'Relaxed fit shirt for weekend outings', 40.00, 2, 2, NOW(), NOW(), 'anonymousUser',
+(5, 'Cotton Casual Shirt', 'Relaxed fit shirt for weekend outings', 40.00, 2, 2, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Cocktail Dress', 'Chic cocktail dress ideal for semi-formal events', 150.00, 3, 3, NOW(), NOW(), 'anonymousUser',
+(5, 'Cocktail Dress', 'Chic cocktail dress ideal for semi-formal events', 150.00, 3, 3, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Additional Accessories
-('Leather Belt', 'Adjustable belt made from premium leather', 25.00, 4, 4, NOW(), NOW(), 'anonymousUser',
+(5, 'Leather Belt', 'Adjustable belt made from premium leather', 25.00, 4, 4, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Sports Cap', 'Breathable cap suitable for outdoor activities', 12.00, 5, 5, NOW(), NOW(), 'anonymousUser',
+(5, 'Sports Cap', 'Breathable cap suitable for outdoor activities', 12.00, 5, 5, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Gold Hoop Earrings', 'Minimalist gold-plated hoop earrings', 55.00, 6, 6, NOW(), NOW(), 'anonymousUser',
+(5, 'Gold Hoop Earrings', 'Minimalist gold-plated hoop earrings', 55.00, 6, 6, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Additional Footwear
-('High-Top Sneakers', 'Bold sneakers with a high-top design', 70.00, 7, 7, NOW(), NOW(), 'anonymousUser',
+(4, 'High-Top Sneakers', 'Bold sneakers with a high-top design', 70.00, 7, 7, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Derby Leather Shoes', 'Classic derby shoes for professional wear', 95.00, 8, 8, NOW(), NOW(), 'anonymousUser',
+(4, 'Derby Leather Shoes', 'Classic derby shoes for professional wear', 95.00, 8, 8, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Summer Flip-Flops', 'Light and easy flip-flops for summer', 15.00, 9, 9, NOW(), NOW(), 'anonymousUser',
+(4, 'Summer Flip-Flops', 'Light and easy flip-flops for summer', 15.00, 9, 9, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 
 -- Additional Outdoor Gear
-('Windbreaker Jacket', 'Lightweight windbreaker for windy conditions', 90.00, 10, 10, NOW(), NOW(), 'anonymousUser',
+(4, 'Windbreaker Jacket', 'Lightweight windbreaker for windy conditions', 90.00, 10, 10, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Hiking Sunglasses', 'Rugged sunglasses for outdoor adventures', 65.00, 11, 11, NOW(), NOW(), 'anonymousUser',
+(4, 'Hiking Sunglasses', 'Rugged sunglasses for outdoor adventures', 65.00, 11, 11, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
-('Daypack Backpack', 'Compact backpack for daily use', 50.00, 12, 12, NOW(), NOW(), 'anonymousUser', 'anonymousUser'),
+(4, 'Daypack Backpack', 'Compact backpack for daily use', 50.00, 12, 12, NOW(), NOW(), 'anonymousUser', 'anonymousUser'),
 
 -- Additional Kids Wear
-('Kids Hoodie', 'Soft hoodie to keep kids warm', 25.00, 13, 13, NOW(), NOW(), 'anonymousUser', 'anonymousUser'),
-('Kids Running Shoes', 'Light and flexible shoes for active kids', 40.00, 14, 14, NOW(), NOW(), 'anonymousUser',
+(4, 'Kids Hoodie', 'Soft hoodie to keep kids warm', 25.00, 13, 13, NOW(), NOW(), 'anonymousUser', 'anonymousUser'),
+(4, 'Kids Running Shoes', 'Light and flexible shoes for active kids', 40.00, 14, 14, NOW(), NOW(), 'anonymousUser',
  'anonymousUser');
 
 INSERT INTO variants (product_id, sku, type, size, color, material, stock, price, fixed, percentage, model, description,

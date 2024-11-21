@@ -1,9 +1,6 @@
 package edu.miu.project.specifications;
 
-import edu.miu.project.models.Brand;
-import edu.miu.project.models.Category;
-import edu.miu.project.models.Product;
-import edu.miu.project.models.SubCategory;
+import edu.miu.project.models.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
@@ -32,10 +29,11 @@ public class ProductSpecificationHelper {
             Long categoryId,
             Long subCategoryId,
             Long brandId,
+            Long sellerId,
             Integer minStock,
             Pageable pageable
     ) {
-        Specification<Product> specification = buildSpecification(name, description, minPrice, maxPrice, categoryId, subCategoryId, brandId);
+        Specification<Product> specification = buildSpecification(name, description, minPrice, maxPrice, categoryId, subCategoryId, brandId, sellerId);
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
@@ -49,18 +47,18 @@ public class ProductSpecificationHelper {
         var categoryJoin = subCategoryJoin.join("category", JoinType.LEFT);
         var brandJoin = root.join("brand", JoinType.LEFT);
         var variantsJoin = root.join("variants", JoinType.LEFT);  // Assuming 'variants' is a relationship of Product
-
+        var userJoin = root.join("seller", JoinType.LEFT);  // Assuming 'seller' is a relationship of Product
         // Use Specification to add predicates
         Predicate predicate = specification.toPredicate(root, query, builder);
 
         // Add multi-select (Product and SUM(stock))
-        query.multiselect(root, builder.sum(variantsJoin.get("stock")), subCategoryJoin, categoryJoin, brandJoin);
+        query.multiselect(root, builder.sum(variantsJoin.get("stock")), subCategoryJoin, categoryJoin, brandJoin, userJoin);
 
         // Apply predicate to query
         query.where(predicate);
 
         // Group by Product id (no need to group by other fields like category, subcategory, etc.)
-        query.groupBy(root.get("id"), brandJoin.get("id"), subCategoryJoin.get("id"), categoryJoin.get("id"));
+        query.groupBy(root.get("id"), brandJoin.get("id"), subCategoryJoin.get("id"), categoryJoin.get("id"), userJoin.get("id"));
         query.orderBy(builder.asc(root.get("id")));
 
         // Apply HAVING for minimum stock filter
@@ -85,6 +83,7 @@ public class ProductSpecificationHelper {
                     product.setSubCategory((SubCategory) row[2]);
                     product.getSubCategory().setCategory((Category) row[3]);
                     product.setBrand((Brand) row[4]);
+                    product.setSeller((User) row[5]);
                     return product;
                 }).collect(Collectors.toList());
 
@@ -114,7 +113,8 @@ public class ProductSpecificationHelper {
             Double maxPrice,
             Long categoryId,
             Long subCategoryId,
-            Long brandId
+            Long brandId,
+            Long sellerId
     ) {
         return (root, query, builder) -> {
             Predicate predicate = builder.conjunction();
@@ -123,6 +123,7 @@ public class ProductSpecificationHelper {
             var subCategoryJoin = root.join("subCategory", JoinType.LEFT);
             var categoryJoin = subCategoryJoin.join("category", JoinType.LEFT);
             var brandJoin = root.join("brand", JoinType.LEFT);
+            var userJoin = root.join("seller", JoinType.LEFT);
 
             // Build predicates for each filter
             if (StringUtils.hasText(name)) {
@@ -145,6 +146,9 @@ public class ProductSpecificationHelper {
             }
             if (!ObjectUtils.isEmpty(brandId)) {
                 predicate = builder.and(predicate, builder.equal(brandJoin.get("id"), brandId));
+            }
+            if (!ObjectUtils.isEmpty(sellerId)) {
+                predicate = builder.and(predicate, builder.equal(userJoin.get("id"), sellerId));
             }
             return predicate;
         };

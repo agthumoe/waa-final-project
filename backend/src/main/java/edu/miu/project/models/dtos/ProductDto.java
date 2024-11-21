@@ -13,5 +13,7 @@ public class ProductDto extends Dto {
     private Boolean enabled;
     private SubCategoryDetailsDto subCategory;
     private BrandDto brand;
+    private UserBriefDto seller;
     private Long stock;
+    private FileDto file;
 }

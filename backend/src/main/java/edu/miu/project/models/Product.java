@@ -28,11 +28,15 @@ public class Product extends MutableModel {
     @Transient
     private Long stock;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private SubCategory subCategory;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Brand brand;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "seller_id", updatable = false)
+    private User seller;
     @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Variant> variants = new ArrayList<>();
@@ -42,4 +46,8 @@ public class Product extends MutableModel {
     @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private List<Meta> metas = new ArrayList<>();
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "file_id")
+    private File file;
 }

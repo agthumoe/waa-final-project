@@ -3,6 +3,7 @@ package edu.miu.project.repositories;
 import edu.miu.project.commons.repositories.AbstractRepository;
 import edu.miu.project.models.Product;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -14,4 +15,7 @@ public interface ProductRepository extends AbstractRepository<Product> {
 
     @EntityGraph(attributePaths = {"subCategory", "subCategory.category", "brand", "variants"})
     Optional<Product> findById(Long id);
+
+    @Query("select case when count(o) > 0 then true else false end from OrderItem o where o.variant.product.id = :id")
+    boolean hasAnyOrder(Long id);
 }

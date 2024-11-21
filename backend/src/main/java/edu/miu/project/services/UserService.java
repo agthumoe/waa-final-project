@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface UserService extends MutableService<User> {
     Optional<User> findByEmail(String email);
 
-    User create(User user, List<String> roles);
+    User create(User user, List<String> roles, Long fileId);
 }
