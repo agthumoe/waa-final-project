@@ -15,7 +15,7 @@ const Product = () => {
   console.log('profile', isAuthenticated);
   const { data: product, isLoading } = useOneProduct(params.id);
   const [selectedVariant, setSelectedVariant] = useState();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddToCart = () => {
     if (availableItem) {
@@ -23,10 +23,10 @@ const Product = () => {
     }
   };
 
-  const handleVariantSelect = useCallback((variant) => {
-    setSelectedVariant(variant);
-    setIsModalOpen(false);
-  }, []);
+  // const handleVariantSelect = useCallback((variant) => {
+  //   setSelectedVariant(variant);
+  //   setIsModalOpen(false);
+  // }, []);
 
   const availableItem = useMemo(
     () => _.find(product?.variants, _.omitBy(selectedVariant, _.isNil)),
@@ -80,8 +80,8 @@ const Product = () => {
                               return (
                                 <Button
                                   key={color}
-                                  className={`mr-2 mb-2 px-4 py-1 border rounded-full text-black hover:text-white transition-all duration-300 
-                                  ${color === selectedVariant?.color ? 'bg-green-100' : 'bg-white hover:bg-gray-500'} 
+                                  className={`mr-2 mb-2 px-4 py-1 border !text-black hover:bg-blue-500 transition-all duration-300 
+                                  ${color === selectedVariant?.color ? 'bg-green-100' : 'bg-white'} 
                                   ${color === selectedVariant?.color ? 'scale-105' : 'scale-100'}`}
                                   onClick={() =>
                                     setSelectedVariant((prev) => ({
@@ -107,8 +107,8 @@ const Product = () => {
                               return (
                                 <Button
                                   key={model}
-                                  className={`mr-2 mb-2 border rounded-full text-black hover:text-white transition-all duration-300 
-                                  ${model === selectedVariant?.model ? 'bg-yellow-100' : 'bg-white hover:bg-gray-500'} 
+                                  className={`mr-2 mb-2 border rounded-full !text-black hover:bg-blue-500 transition-all duration-300 
+                                  ${model === selectedVariant?.model ? 'bg-yellow-100' : 'bg-white'} 
                                   ${model === selectedVariant?.model ? 'scale-105' : 'scale-100'}`}
                                   onClick={() =>
                                     setSelectedVariant((prev) => ({
@@ -134,9 +134,8 @@ const Product = () => {
                               return (
                                 <Button
                                   key={material}
-                                  className={`mr-2 mb-2 px-4 py-1 border rounded-full text-black hover:text-white transition-all duration-300 
-                                  ${material === selectedVariant?.material ? 'bg-blue-200' : 'bg-white hover:bg-gray-500'} 
-                                  ${material === selectedVariant?.material ? 'scale-105' : 'scale-100'}`}
+                                  className={`mr-2 mb-2 px-4 py-1 border hover:bg-blue-500 !text-black transition-all duration-300 
+                                  ${material === selectedVariant?.material ? 'bg-blue-200 scale-105' : 'bg-white'}`}
                                   onClick={() =>
                                     setSelectedVariant((prev) => ({
                                       ...prev,
@@ -161,9 +160,8 @@ const Product = () => {
                               return (
                                 <Button
                                   key={size}
-                                  className={`mr-2 mb-2 px-4 py-1 border rounded-full text-black hover:text-white transition-all duration-300 
-                                  ${size === selectedVariant?.size ? 'bg-orange-300' : 'bg-white hover:bg-gray-500'} 
-                                  ${size === selectedVariant?.size ? 'scale-105' : 'scale-100'}`}
+                                  className={`mr-2 mb-2 px-4 py-1 hover:bg-blue-500 border rounded-full !text-black transition-all duration-300 
+                                  ${size === selectedVariant?.size ? 'bg-orange-300' : 'bg-white'}`}
                                   onClick={() =>
                                     setSelectedVariant((prev) => ({
                                       ...prev,
@@ -188,8 +186,8 @@ const Product = () => {
                               return (
                                 <Button
                                   key={year}
-                                  className={`mr-2 mb-2 px-4 py-2 rounded-full text-white transition-all duration-300 
-                                  ${year === selectedVariant?.year ? 'bg-purple-600' : 'bg-gray-400 hover:bg-gray-500'} 
+                                  className={`mr-2 mb-2 px-4 py-1 hover:bg-blue-500 border rounded-full !text-black hover:text-white transition-all duration-300 
+                                  ${year === selectedVariant?.year ? 'bg-purple-600' : 'bg-white hover:bg-gray-500'} 
                                   ${year === selectedVariant?.year ? 'scale-105' : 'scale-100'}`}
                                   onClick={() =>
                                     setSelectedVariant((prev) => ({
