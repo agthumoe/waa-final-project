@@ -10,7 +10,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "cart_items")
+@Table(name = "cart_items", uniqueConstraints = {
+        @jakarta.persistence.UniqueConstraint(columnNames = {"cart_id", "variant_id"})
+})
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CartItem extends MutableModel {
@@ -19,6 +21,7 @@ public class CartItem extends MutableModel {
     private Cart cart;
 
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Variant variant;
 
     @Column(nullable = false)

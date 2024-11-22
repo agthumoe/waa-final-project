@@ -27,8 +27,8 @@ const config = {
     focusOutline: 'focus-visible:outline-yellow-600',
   },
   default: {
-    textColor: 'text-gray-800',
-    bgColor: 'bg-gray-600',
+    textColor: 'text-gray-700',
+    bgColor: 'bg-gray-300',
     hoverBgColor: 'hover:bg-gray-500',
     focusOutline: 'focus-visible:outline-gray-600',
   },

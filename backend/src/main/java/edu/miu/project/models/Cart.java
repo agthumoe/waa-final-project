@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,5 +19,6 @@ public class Cart extends MutableModel {
     private User buyer;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<CartItem> items = List.of();
+    @JsonIgnore
+    private List<CartItem> items = new ArrayList<>();
 }

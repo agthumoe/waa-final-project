@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class CartItemServiceImpl extends AbstractMutableService<CartItem> implements CartItemService {
     private final CartRepository cartRepository;
@@ -29,13 +31,21 @@ public class CartItemServiceImpl extends AbstractMutableService<CartItem> implem
     @Override
     @Transactional
     public void addItemsToCart(Long cartId, Long variantId, Long quantity) {
-        Cart cart = this.cartRepository.findById(cartId).orElseThrow(() -> new HttpStatusException("Cart not found", 404));
-        Variant variant = this.variantRepository.findById(variantId).orElseThrow(() -> new HttpStatusException("Variant not found", 404));
-        CartItem cartItem = new CartItem();
-        cartItem.setQuantity(quantity);
-        cartItem.setVariant(variant);
-        cartItem.setCart(cart);
-        this.create(cartItem);
+        // check if cart with variant already exists
+        Optional<CartItem> optional = ((CartItemRepository) super.repository).findByCartIdAndVariantId(cartId, variantId);
+        if (optional.isPresent()) {
+            CartItem cartItem = optional.get();
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            this.update(cartItem);
+        } else {
+            Cart cart = this.cartRepository.findById(cartId).orElseThrow(() -> new HttpStatusException("Cart not found", 404));
+            Variant variant = this.variantRepository.findById(variantId).orElseThrow(() -> new HttpStatusException("Variant not found", 404));
+            CartItem cartItem = new CartItem();
+            cartItem.setQuantity(quantity);
+            cartItem.setVariant(variant);
+            cartItem.setCart(cart);
+            this.create(cartItem);
+        }
     }
 
     @Override

@@ -1,32 +1,41 @@
+import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { addToCart } from '../api/api';
 import Button from '../components/Button';
 import Footer from '../components/Footer';
 import Loading from '../components/Loading';
 import Navbar from '../components/Navbar';
 import ProductPrice from '../components/ProductPrice';
+import QuantitySelectorModal from '../components/QuantitySelectorModal';
+import useCart from '../hooks/useCart';
 import useOneProduct from '../hooks/useOneProduct';
 import useProfile from '../hooks/useProfile';
 
 const Product = () => {
   const params = useParams();
   const { isAuthenticated } = useProfile();
-  console.log('profile', isAuthenticated);
+  const { data: cart } = useCart();
+  console.log('profile', isAuthenticated, cart);
   const { data: product, isLoading } = useOneProduct(params.id);
   const [selectedVariant, setSelectedVariant] = useState();
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const queryClient = useQueryClient();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (quantity) => {
     if (availableItem) {
-      console.log('Added to cart:', availableItem);
+      const payload = {
+        variantId: availableItem.id,
+        quantity,
+        cartId: cart.id,
+      };
+      addToCart(payload).then(() => {
+        queryClient.invalidateQueries(['cart', 'fetch']);
+        setIsModalOpen(false);
+      });
     }
   };
-
-  // const handleVariantSelect = useCallback((variant) => {
-  //   setSelectedVariant(variant);
-  //   setIsModalOpen(false);
-  // }, []);
 
   const availableItem = useMemo(
     () => _.find(product?.variants, _.omitBy(selectedVariant, _.isNil)),
@@ -213,8 +222,8 @@ const Product = () => {
               <Button
                 color="primary"
                 className="mt-4"
-                onClick={handleAddToCart}
-                disabled={!isAuthenticated}
+                onClick={() => setIsModalOpen(true)}
+                disabled={!isAuthenticated || !availableItem}
               >
                 Add to Cart
               </Button>
@@ -233,6 +242,11 @@ const Product = () => {
         </div>
       </div>
       <Footer />
+      <QuantitySelectorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddToCart}
+      />
     </>
   );
 };

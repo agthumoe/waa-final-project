@@ -45,7 +45,7 @@ const Cart = () => {
           d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 7h14m-6-7v-4m-4 4h4"
         />
       </svg>
-      Cart ({data?.length || 0})
+      Cart ({data?.items?.length || 0})
     </button>
   );
 };
