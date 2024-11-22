@@ -6,24 +6,27 @@ const SelectField = ({ label, options = [], ...props }) => {
   const id = useId();
   const [field, meta] = useField(props);
   return (
-    <div>
-      <label htmlFor={id} className="block text-sm/6 font-medium text-gray-900">
+    <div className="mb-4">
+      <label
+        htmlFor={id}
+        className="block text-sm font-medium text-gray-800 mb-1"
+      >
         {label}
-        <select
-          {...field}
-          {...props}
-          id={id}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
       </label>
+      <select
+        {...field}
+        {...props}
+        id={id}
+        className="w-full px-4 py-2 border rounded-lg text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       {meta.touched && meta.error ? (
-        <div className="text-red-500 text-sm">{meta.error}</div>
+        <div className="text-red-500 text-sm mt-1">{meta.error}</div>
       ) : null}
     </div>
   );

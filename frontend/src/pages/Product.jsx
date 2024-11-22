@@ -1,0 +1,242 @@
+import _ from 'lodash';
+import { useCallback, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Button from '../components/Button';
+import Footer from '../components/Footer';
+import Loading from '../components/Loading';
+import Navbar from '../components/Navbar';
+import ProductPrice from '../components/ProductPrice';
+import useOneProduct from '../hooks/useOneProduct';
+import useProfile from '../hooks/useProfile';
+
+const Product = () => {
+  const params = useParams();
+  const { isAuthenticated } = useProfile();
+  console.log('profile', isAuthenticated);
+  const { data: product, isLoading } = useOneProduct(params.id);
+  const [selectedVariant, setSelectedVariant] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddToCart = () => {
+    if (availableItem) {
+      console.log('Added to cart:', availableItem);
+    }
+  };
+
+  const handleVariantSelect = useCallback((variant) => {
+    setSelectedVariant(variant);
+    setIsModalOpen(false);
+  }, []);
+
+  const availableItem = useMemo(
+    () => _.find(product?.variants, _.omitBy(selectedVariant, _.isNil)),
+    [product, selectedVariant]
+  );
+
+  const groupOptions = useCallback((variants, key) => {
+    const options = variants.map((variant) => variant[key]).filter(Boolean);
+    return [...new Set(options)];
+  }, []);
+
+  if (isLoading && !product) {
+    return <Loading />;
+  }
+
+  return (
+    <>
+      <Navbar />
+      <div className="container mx-auto p-4 flex-1 mt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div>
+            <img
+              src={product?.file || 'https://via.placeholder.com/500'}
+              alt={product?.name}
+              className="w-80 h-80 object-cover rounded-lg shadow-md"
+            />
+          </div>
+          <div className="col-span-2">
+            <h2 className="text-3xl font-bold text-gray-800">
+              {product?.name}
+            </h2>
+            <p className="text-lg text-gray-600 mt-2">{product?.description}</p>
+            <ProductPrice
+              basePrice={product?.basePrice}
+              variant={availableItem}
+            />
+
+            <div className="mt-4">
+              <h4 className="text-lg font-semibold mt-10">
+                Available Options:
+              </h4>
+              <div className="mt-2">
+                {product?.variants && (
+                  <div className="space-y-4">
+                    {groupOptions(product.variants, 'color').length > 0 && (
+                      <div>
+                        <h5 className="font-semibold">Color:</h5>
+                        <div className="flex gap-2">
+                          {groupOptions(product.variants, 'color').map(
+                            (color) => {
+                              return (
+                                <Button
+                                  key={color}
+                                  className={`mr-2 mb-2 px-4 py-1 border rounded-full text-black hover:text-white transition-all duration-300 
+                                  ${color === selectedVariant?.color ? 'bg-green-100' : 'bg-white hover:bg-gray-500'} 
+                                  ${color === selectedVariant?.color ? 'scale-105' : 'scale-100'}`}
+                                  onClick={() =>
+                                    setSelectedVariant((prev) => ({
+                                      ...prev,
+                                      color,
+                                    }))
+                                  }
+                                >
+                                  {color}
+                                </Button>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {groupOptions(product.variants, 'model').length > 0 && (
+                      <div>
+                        <h5 className="font-semibold">Model:</h5>
+                        <div className="flex gap-2">
+                          {groupOptions(product.variants, 'model').map(
+                            (model) => {
+                              return (
+                                <Button
+                                  key={model}
+                                  className={`mr-2 mb-2 border rounded-full text-black hover:text-white transition-all duration-300 
+                                  ${model === selectedVariant?.model ? 'bg-yellow-100' : 'bg-white hover:bg-gray-500'} 
+                                  ${model === selectedVariant?.model ? 'scale-105' : 'scale-100'}`}
+                                  onClick={() =>
+                                    setSelectedVariant((prev) => ({
+                                      ...prev,
+                                      model,
+                                    }))
+                                  }
+                                >
+                                  {model}
+                                </Button>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {groupOptions(product.variants, 'material').length > 0 && (
+                      <div>
+                        <h5 className="font-semibold">Material:</h5>
+                        <div className="flex gap-2">
+                          {groupOptions(product.variants, 'material').map(
+                            (material) => {
+                              return (
+                                <Button
+                                  key={material}
+                                  className={`mr-2 mb-2 px-4 py-1 border rounded-full text-black hover:text-white transition-all duration-300 
+                                  ${material === selectedVariant?.material ? 'bg-blue-200' : 'bg-white hover:bg-gray-500'} 
+                                  ${material === selectedVariant?.material ? 'scale-105' : 'scale-100'}`}
+                                  onClick={() =>
+                                    setSelectedVariant((prev) => ({
+                                      ...prev,
+                                      material,
+                                    }))
+                                  }
+                                >
+                                  {material}
+                                </Button>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {groupOptions(product.variants, 'size').length > 0 && (
+                      <div>
+                        <h5 className="font-semibold">Size:</h5>
+                        <div className="flex gap-2">
+                          {groupOptions(product.variants, 'size').map(
+                            (size) => {
+                              return (
+                                <Button
+                                  key={size}
+                                  className={`mr-2 mb-2 px-4 py-1 border rounded-full text-black hover:text-white transition-all duration-300 
+                                  ${size === selectedVariant?.size ? 'bg-orange-300' : 'bg-white hover:bg-gray-500'} 
+                                  ${size === selectedVariant?.size ? 'scale-105' : 'scale-100'}`}
+                                  onClick={() =>
+                                    setSelectedVariant((prev) => ({
+                                      ...prev,
+                                      size,
+                                    }))
+                                  }
+                                >
+                                  {size}
+                                </Button>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {groupOptions(product.variants, 'year').length > 0 && (
+                      <div>
+                        <h5 className="font-semibold">Year:</h5>
+                        <div className="flex gap-2">
+                          {groupOptions(product.variants, 'year').map(
+                            (year) => {
+                              return (
+                                <Button
+                                  key={year}
+                                  className={`mr-2 mb-2 px-4 py-2 rounded-full text-white transition-all duration-300 
+                                  ${year === selectedVariant?.year ? 'bg-purple-600' : 'bg-gray-400 hover:bg-gray-500'} 
+                                  ${year === selectedVariant?.year ? 'scale-105' : 'scale-100'}`}
+                                  onClick={() =>
+                                    setSelectedVariant((prev) => ({
+                                      ...prev,
+                                      year,
+                                    }))
+                                  }
+                                >
+                                  {year}
+                                </Button>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <Button
+                color="primary"
+                className="mt-4"
+                onClick={handleAddToCart}
+                disabled={!isAuthenticated}
+              >
+                Add to Cart
+              </Button>
+              {!_.isEmpty(selectedVariant) && !isAuthenticated && (
+                <div className="mt-2 text-red-500">
+                  Please login to add item to the cart
+                </div>
+              )}
+            </div>
+            {!_.isEmpty(selectedVariant) && isAuthenticated && (
+              <div className="mt-4 text-green-500">
+                <p>Selected Options: {_.map(selectedVariant).join(' - ')}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+export default Product;

@@ -1,65 +1,89 @@
-import PropTypes from "prop-types";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import Badge from "../components/Badge";
-import Button from "../components/Button";
-import AuthContext from "../contexts/AuthContext";
-import useAuth from "../hooks/useAuth";
-
-const Description = ({ label, value }) => (
-  <div className="py-6 grid grid-cols-3 gap-4">
-    <dt className="text-sm/6 font-medium text-gray-900">{label}</dt>
-    <dd className="text-sm/6 text-gray-700 col-span-2 space-x-1">{value}</dd>
-  </div>
-);
-
-Description.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.array,
-  ]),
-};
-
-const renderRoles = (roles) =>
-  roles?.map((role) => <Badge key={role}>{role}</Badge>);
+import _ from 'lodash';
+import Button from '../components/Button';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import Role from '../components/Role';
+import useProfile from '../hooks/useProfile';
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
-  const { logout } = useAuth();
-  const navigate = useNavigate();
+  const { data, isLoading, isError } = useProfile();
 
-  const onHandleLogout = () => {
-    logout().then(() => {
-      navigate("/");
-    });
-  };
+  if (isLoading) {
+    return <div className="text-center mt-10">Loading your profile...</div>;
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="text-center mt-10 text-red-500">
+        Failed to load profile data.
+      </div>
+    );
+  }
+
+  const profilePic = data.profilePic; // Assume `profilePic` is part of the user's data
+  const initials =
+    data.name
+      ?.split(' ')
+      .map((word) => word[0])
+      .join('')
+      .toUpperCase() || 'U';
 
   return (
-    <div className="max-w-lg mx-auto mt-32 p-10 rounded-lg bg-white shadow-md">
-      <h2 className="text-2xl font-bold text-indigo-700 mb-7 text-center">
-        User Profile
-      </h2>
-      <div className="mt-6 border-t border-gray-100">
-        <dl className="divide-y divide-gray-100">
-          <Description label="ID" value={user?.id} />
-          <Description label="Username" value={user?.username} />
-          <Description label="Full name" value={user?.name} />
-          <Description label="Roles" value={renderRoles(user?.roles)} />
-        </dl>
+    <>
+      <Navbar />
+      <div className="container mx-auto px-4 py-10 flex-1">
+        <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center space-x-6">
+            <div className="w-24 h-24 rounded-full bg-gray-500 overflow-hidden flex items-center justify-center">
+              {profilePic ? (
+                <img
+                  src={profilePic}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-white font-bold text-5xl">
+                  {initials}
+                </span>
+              )}
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">{data.name}</h1>
+              <p className="text-gray-600">{data.email}</p>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <h2 className="text-lg font-semibold text-gray-700">
+              Account Details
+            </h2>
+            <div className="mt-4 space-y-2">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Full Name:</span>
+                <span className="text-gray-800">{data.name || 'N/A'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Email:</span>
+                <span className="text-gray-800">{data.email || 'N/A'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Roles:</span>
+                <span className="text-gray-800 space-x-2">
+                  {_.map(data.roles, (role) => (
+                    <Role key={role} role={role} />
+                  ))}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <Button>Edit Profile</Button>
+          </div>
+        </div>
       </div>
-      <div className="mt-7 flex space-x-2 justify-end">
-        <Button
-          type="button"
-          color="danger"
-          className="w-full"
-          onClick={onHandleLogout}
-        >
-          Logout
-        </Button>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

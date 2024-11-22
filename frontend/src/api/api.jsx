@@ -25,4 +25,38 @@ export const login = async (data) => {
   return response.data;
 };
 
+export const getProfile = async () => {
+  const response = await api.get('/profile');
+  return response.data;
+};
+
+export const register = async (data) => {
+  const response = await api.post('/register', data);
+  return response.data;
+};
+
+export const getProducts = async (params) => {
+  const response = await api.get('/products', {
+    params,
+  });
+  return response.data;
+};
+
+export const getProduct = async (id) => {
+  const response = await api.get(`/products/${id}`);
+  return response.data;
+};
+
+export const getCategories = async (params) => {
+  const response = await api.get('/categories', {
+    params,
+  });
+  return response.data;
+};
+
+export const getCart = async () => {
+  const response = await api.get('/cart');
+  return response.data;
+};
+
 export default api;

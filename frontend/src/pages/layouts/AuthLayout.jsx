@@ -1,19 +1,15 @@
-import { useContext, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Error from '../../components/Error';
 import Header from '../../components/Header';
-import AuthContext from '../../contexts/AuthContext';
-import useAuth from '../../hooks/useAuth';
+import Loading from '../../components/Loading';
+import useProfile from '../../hooks/useProfile';
 
 const AuthLayout = () => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const { fetchProfile } = useAuth();
+  const { isAuthenticated, isLoading } = useProfile();
 
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      fetchProfile();
-    }
-  }, [isAuthenticated]);
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (!isAuthenticated) {
     return (
