@@ -1,27 +1,30 @@
 import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { addToCart } from '../api/api';
+import Badge from '../components/Badge';
 import Button from '../components/Button';
 import Footer from '../components/Footer';
 import Loading from '../components/Loading';
 import Navbar from '../components/Navbar';
 import ProductPrice from '../components/ProductPrice';
 import QuantitySelectorModal from '../components/QuantitySelectorModal';
+import Ratings from '../components/Ratings';
 import useCart from '../hooks/useCart';
 import useOneProduct from '../hooks/useOneProduct';
+import useProductRating from '../hooks/useProductRatings';
 import useProfile from '../hooks/useProfile';
 
 const Product = () => {
   const params = useParams();
   const { isAuthenticated } = useProfile();
   const { data: cart } = useCart();
-  console.log('profile', isAuthenticated, cart);
   const { data: product, isLoading } = useOneProduct(params.id);
   const [selectedVariant, setSelectedVariant] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { data: ratings } = useProductRating(params.id);
 
   const handleAddToCart = (quantity) => {
     if (availableItem) {
@@ -62,6 +65,24 @@ const Product = () => {
               alt={product?.name}
               className="w-80 h-80 object-cover rounded-lg shadow-md"
             />
+            <div className="flex flex-col mt-4 space-y-1">
+              <p className="text-sm text-gray-500">
+                <strong>Brand:</strong> {product?.brand?.name}
+              </p>
+              <p className="text-sm text-gray-500">
+                <strong>Category:</strong>{' '}
+                <Badge color="green">
+                  {product?.subCategory?.category?.name || ''}
+                </Badge>
+              </p>
+              <p className="text-sm text-gray-500">
+                <strong>Sub-category:</strong>{' '}
+                <Badge color="red">{product?.subCategory?.name || ''}</Badge>
+              </p>
+              <p className="text-sm text-gray-500">
+                <strong>Seller:</strong> {product?.seller?.name}
+              </p>
+            </div>
           </div>
           <div className="col-span-2">
             <h2 className="text-3xl font-bold text-gray-800">
@@ -89,7 +110,7 @@ const Product = () => {
                               return (
                                 <Button
                                   key={color}
-                                  className={`mr-2 mb-2 px-4 py-1 border !text-black hover:bg-blue-500 transition-all duration-300 
+                                  className={`mr-2 mb-2 !py-0.5 text-sm border !text-black hover:bg-blue-500 transition-all duration-300 
                                   ${color === selectedVariant?.color ? 'bg-green-100' : 'bg-white'} 
                                   ${color === selectedVariant?.color ? 'scale-105' : 'scale-100'}`}
                                   onClick={() =>
@@ -116,7 +137,7 @@ const Product = () => {
                               return (
                                 <Button
                                   key={model}
-                                  className={`mr-2 mb-2 border rounded-full !text-black hover:bg-blue-500 transition-all duration-300 
+                                  className={`mr-2 mb-2 !py-0.5 text-sm border rounded-full !text-black hover:bg-blue-500 transition-all duration-300 
                                   ${model === selectedVariant?.model ? 'bg-yellow-100' : 'bg-white'} 
                                   ${model === selectedVariant?.model ? 'scale-105' : 'scale-100'}`}
                                   onClick={() =>
@@ -143,7 +164,7 @@ const Product = () => {
                               return (
                                 <Button
                                   key={material}
-                                  className={`mr-2 mb-2 px-4 py-1 border hover:bg-blue-500 !text-black transition-all duration-300 
+                                  className={`mr-2 mb-2 !py-0.5 text-sm border hover:bg-blue-500 !text-black transition-all duration-300 
                                   ${material === selectedVariant?.material ? 'bg-blue-200 scale-105' : 'bg-white'}`}
                                   onClick={() =>
                                     setSelectedVariant((prev) => ({
@@ -169,7 +190,7 @@ const Product = () => {
                               return (
                                 <Button
                                   key={size}
-                                  className={`mr-2 mb-2 px-4 py-1 hover:bg-blue-500 border rounded-full !text-black transition-all duration-300 
+                                  className={`mr-2 mb-2 !py-0.5 text-sm hover:bg-blue-500 border rounded-full !text-black transition-all duration-300 
                                   ${size === selectedVariant?.size ? 'bg-orange-300' : 'bg-white'}`}
                                   onClick={() =>
                                     setSelectedVariant((prev) => ({
@@ -195,7 +216,7 @@ const Product = () => {
                               return (
                                 <Button
                                   key={year}
-                                  className={`mr-2 mb-2 px-4 py-1 hover:bg-blue-500 border rounded-full !text-black hover:text-white transition-all duration-300 
+                                  className={`mr-2 mb-2 !py-0.5 text-sm hover:bg-blue-500 border rounded-full !text-black hover:text-white transition-all duration-300 
                                   ${year === selectedVariant?.year ? 'bg-purple-600' : 'bg-white hover:bg-gray-500'} 
                                   ${year === selectedVariant?.year ? 'scale-105' : 'scale-100'}`}
                                   onClick={() =>
@@ -219,14 +240,18 @@ const Product = () => {
             </div>
 
             <div>
-              <Button
-                color="primary"
-                className="mt-4"
-                onClick={() => setIsModalOpen(true)}
-                disabled={!isAuthenticated || !availableItem}
-              >
-                Add to Cart
-              </Button>
+              <div className="flex space-x-2 items-center justify-center">
+                <Link to={`/buyer/products/${product?.id}/reviews`}>
+                  <Button color="danger">Give Review</Button>
+                </Link>
+                <Button
+                  color="primary"
+                  onClick={() => setIsModalOpen(true)}
+                  disabled={!isAuthenticated || !availableItem}
+                >
+                  Add to Cart
+                </Button>
+              </div>
               {!_.isEmpty(selectedVariant) && !isAuthenticated && (
                 <div className="mt-2 text-red-500">
                   Please login to add item to the cart
@@ -240,6 +265,7 @@ const Product = () => {
             )}
           </div>
         </div>
+        <Ratings ratings={ratings} />
       </div>
       <Footer />
       <QuantitySelectorModal

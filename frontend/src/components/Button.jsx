@@ -27,7 +27,7 @@ const config = {
     focusOutline: 'focus-visible:outline-yellow-600',
   },
   default: {
-    textColor: 'text-gray-700',
+    textColor: 'text-gray-100',
     bgColor: 'bg-gray-300',
     hoverBgColor: 'hover:bg-gray-500',
     focusOutline: 'focus-visible:outline-gray-600',
@@ -57,7 +57,7 @@ const Button = ({
       type={type}
       disabled={disabled}
       className={cx(
-        `inline-block px-6 py-2 text-lg font-medium rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed`,
+        `inline-block px-6 py-1 text-lg font-medium rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed`,
         variant === 'link'
           ? `${config.link.textColor} ${config.link.border} ${config.link.hoverTextColor} ${config.link.hoverBgColor} ${config.link.focusOutline}`
           : `${config[color].bgColor} ${config[color].hoverBgColor} ${config[color].focusOutline} ${config[color].textColor}`,

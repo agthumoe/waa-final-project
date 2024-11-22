@@ -6,5 +6,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ProductVariantDto extends VariantDto {
-    private ProductBriefDto product;
+    private String productName;
+    private String productFileUrl;
 }

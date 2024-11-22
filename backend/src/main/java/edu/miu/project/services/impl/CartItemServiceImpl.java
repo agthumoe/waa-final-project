@@ -52,7 +52,7 @@ public class CartItemServiceImpl extends AbstractMutableService<CartItem> implem
     @Transactional
     public void updateCartItem(Long cartItemId, Long quantity) {
         if (quantity <= 0) {
-            this.deleteById(cartItemId);
+            ((CartItemRepository) super.repository).deleteById(cartItemId);
         } else {
             CartItem cartItem = this.findOne(cartItemId).orElseThrow(() -> new HttpStatusException("Cart item not found", 404));
             cartItem.setQuantity(quantity);
@@ -64,5 +64,11 @@ public class CartItemServiceImpl extends AbstractMutableService<CartItem> implem
     @Transactional
     public void clearAllCartItems(Long cartId) {
         ((CartItemRepository) super.repository).deleteAllByCartId(cartId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long cartItemId) {
+        ((CartItemRepository) super.repository).deleteById(cartItemId);
     }
 }

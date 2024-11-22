@@ -50,7 +50,9 @@ const Notification = ({ id, title, message, type, remove }) => {
       >
         <div className="flex-shrink-0">{icon}</div>
         <div className="ml-4">
-          <h3 className="text-sm font-medium text-gray-900">{title}</h3>
+          {title && (
+            <h3 className="text-sm font-medium text-gray-900">{title}</h3>
+          )}
           <p className="text-sm text-gray-700">{message}</p>
         </div>
         <button
@@ -67,7 +69,7 @@ const Notification = ({ id, title, message, type, remove }) => {
 
 Notification.propTypes = {
   id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   message: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['info', 'success', 'error', 'warning']).isRequired,
   remove: PropTypes.func.isRequired,

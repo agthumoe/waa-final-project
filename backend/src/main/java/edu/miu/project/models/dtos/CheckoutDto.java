@@ -1,6 +1,6 @@
 package edu.miu.project.models.dtos;
 
-import jakarta.validation.constraints.NotBlank;
+import edu.miu.project.models.enums.PaymentMethod;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -8,6 +8,6 @@ import lombok.Data;
 public class CheckoutDto {
     @NotNull
     private Long addressId;
-    @NotBlank(message = "Payment method is required")
-    private String paymentMethod;
+    @NotNull
+    private PaymentMethod paymentMethod;
 }

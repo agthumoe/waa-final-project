@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import useProfile from '../hooks/useProfile';
+import Button from './Button';
 import Cart from './Cart';
 import Dropdown from './Dropdown';
 
@@ -21,7 +22,6 @@ const Navbar = () => {
         <Link to="/" className="text-2xl font-bold hover:text-gray-300">
           Moe Marketplace
         </Link>
-
         <ul className="hidden md:flex space-x-8">
           <li>
             <Link to="/" className="hover:text-gray-300">
@@ -44,30 +44,23 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-
-        {/* Right Section */}
         <div className="flex items-center space-x-4">
           {isAuthenticated && _.includes(data?.roles, 'ROLE_BUYER') && <Cart />}
-
           {!isAuthenticated ? (
             <>
-              <Link
-                to="/login"
-                className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
-              >
-                Login
+              <Link to="/login">
+                <Button>Login</Button>
               </Link>
-              <Link
-                to="/register"
-                className="bg-green-600 px-4 py-2 rounded hover:bg-green-700"
-              >
-                Register
+              <Link to="/register">
+                <Button variant="link">Register</Button>
               </Link>
             </>
           ) : (
             <Dropdown
               menuItems={[
                 { label: 'Profile', to: '/profile', type: 'link' },
+                { label: 'Orders', to: '/buyer/orders', type: 'link' },
+                { label: 'Addresses', to: '/buyer/addresses', type: 'link' },
                 { label: 'Logout', onClick: logout, type: 'button' },
               ]}
             >
@@ -88,8 +81,6 @@ const Navbar = () => {
             </Dropdown>
           )}
         </div>
-
-        {/* Mobile Menu Toggle */}
         <button className="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-gray-300">
           <svg
             className="w-6 h-6"

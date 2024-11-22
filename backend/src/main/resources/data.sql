@@ -307,3 +307,49 @@ VALUES (1, gen_random_uuid(), 'FIXED', 'S', 'Red', 'Cotton', 50, 20, 8, 0, 'Mode
         NOW(), NOW(), 'anonymousUser', 'anonymousUser'),
        (15, gen_random_uuid(), NULL, 'S', 'Navy', 'Cotton', 25, 10, 0, 0, 'Model-CT',
         'Small size navy cotton trousers with 10% discount', NOW(), NOW(), 'anonymousUser', 'anonymousUser');
+
+-- Inserting 5 addresses for user 1
+INSERT INTO addresses (user_id, street, city, state, zip, country, created_at, created_by, last_modified_at, last_modified_by)
+VALUES
+    (1, '123 Elm Street', 'Springfield', 'Illinois', '62701', 'USA', '2024-11-21T09:00:00.000Z', 'system', '2024-11-21T09:00:00.000Z', 'system'),
+    (1, '456 Oak Avenue', 'Springfield', 'Illinois', '62702', 'USA', '2024-11-21T09:05:00.000Z', 'system', '2024-11-21T09:05:00.000Z', 'system'),
+    (1, '789 Pine Road', 'Springfield', 'Illinois', '62703', 'USA', '2024-11-21T09:10:00.000Z', 'system', '2024-11-21T09:10:00.000Z', 'system'),
+    (1, '101 Maple Lane', 'Springfield', 'Illinois', '62704', 'USA', '2024-11-21T09:15:00.000Z', 'system', '2024-11-21T09:15:00.000Z', 'system'),
+    (1, '202 Birch Street', 'Springfield', 'Illinois', '62705', 'USA', '2024-11-21T09:20:00.000Z', 'system', '2024-11-21T09:20:00.000Z', 'system');
+
+-- Inserting 5 addresses for user 2
+INSERT INTO addresses (user_id, street, city, state, zip, country, created_at, created_by, last_modified_at, last_modified_by)
+VALUES
+    (2, '123 Elm Street', 'Los Angeles', 'California', '90001', 'USA', '2024-11-21T09:00:00.000Z', 'system', '2024-11-21T09:00:00.000Z', 'system'),
+    (2, '456 Oak Avenue', 'Los Angeles', 'California', '90002', 'USA', '2024-11-21T09:05:00.000Z', 'system', '2024-11-21T09:05:00.000Z', 'system'),
+    (2, '789 Pine Road', 'Los Angeles', 'California', '90003', 'USA', '2024-11-21T09:10:00.000Z', 'system', '2024-11-21T09:10:00.000Z', 'system'),
+    (2, '101 Maple Lane', 'Los Angeles', 'California', '90004', 'USA', '2024-11-21T09:15:00.000Z', 'system', '2024-11-21T09:15:00.000Z', 'system'),
+    (2, '202 Birch Street', 'Los Angeles', 'California', '90005', 'USA', '2024-11-21T09:20:00.000Z', 'system', '2024-11-21T09:20:00.000Z', 'system');
+
+-- Inserting 5 addresses for user 3
+INSERT INTO addresses (user_id, street, city, state, zip, country, created_at, created_by, last_modified_at, last_modified_by)
+VALUES
+    (3, '123 Elm Street', 'Chicago', 'Illinois', '60601', 'USA', '2024-11-21T09:00:00.000Z', 'system', '2024-11-21T09:00:00.000Z', 'system'),
+    (3, '456 Oak Avenue', 'Chicago', 'Illinois', '60602', 'USA', '2024-11-21T09:05:00.000Z', 'system', '2024-11-21T09:05:00.000Z', 'system'),
+    (3, '789 Pine Road', 'Chicago', 'Illinois', '60603', 'USA', '2024-11-21T09:10:00.000Z', 'system', '2024-11-21T09:10:00.000Z', 'system'),
+    (3, '101 Maple Lane', 'Chicago', 'Illinois', '60604', 'USA', '2024-11-21T09:15:00.000Z', 'system', '2024-11-21T09:15:00.000Z', 'system'),
+    (3, '202 Birch Street', 'Chicago', 'Illinois', '60605', 'USA', '2024-11-21T09:20:00.000Z', 'system', '2024-11-21T09:20:00.000Z', 'system');
+
+-- Inserting 5 addresses for user 4
+INSERT INTO addresses (user_id, street, city, state, zip, country, created_at, created_by, last_modified_at, last_modified_by)
+VALUES
+    (4, '123 Elm Street', 'Houston', 'Texas', '77001', 'USA', '2024-11-21T09:00:00.000Z', 'system', '2024-11-21T09:00:00.000Z', 'system'),
+    (4, '456 Oak Avenue', 'Houston', 'Texas', '77002', 'USA', '2024-11-21T09:05:00.000Z', 'system', '2024-11-21T09:05:00.000Z', 'system'),
+    (4, '789 Pine Road', 'Houston', 'Texas', '77003', 'USA', '2024-11-21T09:10:00.000Z', 'system', '2024-11-21T09:10:00.000Z', 'system'),
+    (4, '101 Maple Lane', 'Houston', 'Texas', '77004', 'USA', '2024-11-21T09:15:00.000Z', 'system', '2024-11-21T09:15:00.000Z', 'system'),
+    (4, '202 Birch Street', 'Houston', 'Texas', '77005', 'USA', '2024-11-21T09:20:00.000Z', 'system', '2024-11-21T09:20:00.000Z', 'system');
+
+-- Inserting 5 addresses for user 5
+INSERT INTO addresses (user_id, street, city, state, zip, country, created_at, created_by, last_modified_at, last_modified_by)
+VALUES
+    (5, '123 Elm Street', 'Miami', 'Florida', '33101', 'USA', '2024-11-21T09:00:00.000Z', 'system', '2024-11-21T09:00:00.000Z', 'system'),
+    (5, '456 Oak Avenue', 'Miami', 'Florida', '33102', 'USA', '2024-11-21T09:05:00.000Z', 'system', '2024-11-21T09:05:00.000Z', 'system'),
+    (5, '789 Pine Road', 'Miami', 'Florida', '33103', 'USA', '2024-11-21T09:10:00.000Z', 'system', '2024-11-21T09:10:00.000Z', 'system'),
+    (5, '101 Maple Lane', 'Miami', 'Florida', '33104', 'USA', '2024-11-21T09:15:00.000Z', 'system', '2024-11-21T09:15:00.000Z', 'system'),
+    (5, '202 Birch Street', 'Miami', 'Florida', '33105', 'USA', '2024-11-21T09:20:00.000Z', 'system', '2024-11-21T09:20:00.000Z', 'system');
+

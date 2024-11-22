@@ -1,43 +1,76 @@
+import cx from 'classnames';
 import PropTypes from 'prop-types';
+import { useSearchParams } from 'react-router-dom';
+const Pagination = ({ className, totalPages }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-const Pagination = ({ number, totalPages, onChange }) => {
-  const handlePrevious = () => {
-    if (number > 0) onChange(number - 1);
+  const page = Number(searchParams.get('page') || 0);
+  const size = Number(searchParams.get('size') || 10);
+
+  // Handle page change (Previous and Next)
+  const handleNext = () => {
+    setSearchParams({ page: page + 1, size });
   };
 
-  const handleNext = () => {
-    if (number < totalPages) onChange(number + 1);
+  const handlePrevious = () => {
+    setSearchParams({ page: page - 1, size });
   };
 
   return (
-    <div className="flex justify-center items-center mt-6 space-x-2">
-      <button
-        onClick={handlePrevious}
-        disabled={number === 0}
-        className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-      >
-        Previous
-      </button>
-      <span className="px-4 py-2">
-        Page {number + 1} of {totalPages}
-      </span>
-      <button
-        onClick={handleNext}
-        disabled={number + 1 === totalPages}
-        className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-      >
-        Next
-      </button>
-    </div>
+    <nav className={cx('flex justify-center my-5', className)}>
+      <div className="flex">
+        <button
+          onClick={handlePrevious}
+          disabled={page === 0}
+          className="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <svg
+            className="w-3.5 h-3.5 me-2 rtl:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 10"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 5H1m0 0 4 4M1 5l4-4"
+            />
+          </svg>
+          Previous
+        </button>
+        <button
+          onClick={handleNext}
+          disabled={page === totalPages - 1}
+          className="flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Next
+          <svg
+            className="w-3.5 h-3.5 ms-2 rtl:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 10"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M1 5h12m0 0L9 1m4 4L9 9"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
   );
 };
 
 Pagination.propTypes = {
-  number: PropTypes.number.isRequired,
-  size: PropTypes.number.isRequired,
-  totalElements: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
 export default Pagination;

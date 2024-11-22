@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { deleteOnePost } from "../api/api";
-import Badge from "../components/Badge";
-import Button from "../components/Button";
-import Comments from "../components/Comments";
-import useGetPostDetailsWithComments from "../hooks/useGetPostDetailsWithCommments";
+import { useNavigate } from 'react-router-dom';
+import { deleteOnePost } from '../api/api';
+import Badge from '../components/Badge';
+import Button from '../components/Button';
+import Comments from '../components/Comments';
+import useGetPostDetailsWithComments from '../hooks/useGetPostDetailsWithCommments';
 
 const PostDetails = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const PostDetails = () => {
   const handleDelete = async (id) => {
     await deleteOnePost(id);
     alert(`Deleted: ${id}`);
-    navigate("/auth/posts");
+    navigate('/buyer/posts');
   };
 
   if (!post) {

@@ -16,6 +16,7 @@ public class OrderItem extends ImmutableModel {
     private Order order;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JsonIgnore
     private Variant variant;
 
     @Column(name = "price_at_order", nullable = false)

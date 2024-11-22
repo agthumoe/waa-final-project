@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import Badge from "./Badge";
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import Badge from './Badge';
 
 const Post = ({ id, title, author }) => {
   return (
-    <Link to={`/auth/posts/${id}`}>
+    <Link to={`/buyer/posts/${id}`}>
       <div
         className="border shadow-md rounded-lg p-6 w-full hover:shadow-lg cursor-pointer transition duration-300 bg-white"
         role="button"

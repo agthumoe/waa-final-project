@@ -19,7 +19,7 @@ const CreatePost = () => {
     };
     createPost(data).then(() => {
       formRef.current.reset();
-      navigate("/auth/posts");
+      navigate("/buyer/posts");
     });
   };
 

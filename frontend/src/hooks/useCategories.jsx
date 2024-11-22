@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '../api/api';
 
-function useCategories(page = 0, size = 10) {
-  const { data, ...rest } = useQuery({
-    queryKey: ['categories', 'fetch', page, size],
-    queryFn: () => getCategories({ page, size }),
-    initialData: { content: [] },
+function useCategories(params) {
+  return useQuery({
+    queryKey: ['categories', 'fetch', params],
+    queryFn: () => getCategories(params),
+    initialData: { content: [], page: {} },
   });
-  return { data: data?.content, page: data?.page, ...rest };
 }
 
 export default useCategories;

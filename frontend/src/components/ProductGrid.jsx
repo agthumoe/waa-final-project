@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import useProducts from '../hooks/useProducts';
 import Button from './Button';
 import Loading from './Loading';
@@ -16,14 +17,16 @@ const ProductGrid = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Our Products</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {_.map(data, (product) => (
+          {_.map(data?.content, (product) => (
             <Product key={product.id} {...product} />
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Button variant="link" to="/products">
-            View All Products
-          </Button>
+          <Link to="/products">
+            <Button variant="link" to="/products">
+              View All Products
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

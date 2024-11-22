@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import Error from '../../components/Error';
-import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import Loading from '../../components/Loading';
+import Navbar from '../../components/Navbar';
 import useProfile from '../../hooks/useProfile';
 
-const AuthLayout = () => {
-  const { isAuthenticated, isLoading } = useProfile();
+const BuyerAuthLayout = () => {
+  const { isAuthenticated, isLoading, data } = useProfile();
 
   if (isLoading) {
     return <Loading />;
@@ -22,12 +23,23 @@ const AuthLayout = () => {
     );
   }
 
-  return (
+  if (!data?.roles.includes('ROLE_BUYER')) {
+    return (
+      <Error
+        title="403"
+        subtitle="Forbidden"
+        description="You need to be a buyer to access this page"
+      />
+    );
+  }
+
+  return (  
     <>
-      <Header />
+      <Navbar />
       <Outlet />
+      <Footer />
     </>
   );
 };
 
-export default AuthLayout;
+export default BuyerAuthLayout;

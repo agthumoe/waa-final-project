@@ -5,7 +5,6 @@ function useCart() {
   return useQuery({
     queryKey: ['cart', 'fetch'],
     queryFn: getCart,
-    initialData: null,
   });
 }
 

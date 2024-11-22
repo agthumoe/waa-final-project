@@ -45,6 +45,7 @@ public class SecurityConfiguration {
             "/api/v1/subcategories",
             "/api/v1/products",
             "/api/v1/products/{id}",
+            "/api/v1/products/{id}/ratings",
     };
 
     @Bean
