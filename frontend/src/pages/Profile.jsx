@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import Button from '../components/Button';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Role from '../components/Role';
@@ -75,10 +74,6 @@ const Profile = () => {
                 </span>
               </div>
             </div>
-          </div>
-
-          <div className="mt-6">
-            <Button>Edit Profile</Button>
           </div>
         </div>
       </div>

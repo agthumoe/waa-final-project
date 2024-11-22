@@ -9,6 +9,7 @@ import edu.miu.project.models.User;
 import edu.miu.project.repositories.FileRepository;
 import edu.miu.project.repositories.RoleRepository;
 import edu.miu.project.repositories.UserRepository;
+import edu.miu.project.securities.AuthContext;
 import edu.miu.project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +24,14 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends AbstractMutableService<User> implements UserService {
     private final RoleRepository roleRepository;
     private final FileRepository fileRepository;
+    private final AuthContext authContext;
 
     @Autowired
-    protected UserServiceImpl(AbstractRepository<User> repository, RoleRepository roleRepository, FileRepository fileRepository) {
+    protected UserServiceImpl(AbstractRepository<User> repository, RoleRepository roleRepository, FileRepository fileRepository, AuthContext authContext) {
         super(repository);
         this.roleRepository = roleRepository;
         this.fileRepository = fileRepository;
+        this.authContext = authContext;
     }
 
     @Override
@@ -46,6 +49,15 @@ public class UserServiceImpl extends AbstractMutableService<User> implements Use
         }
         user.setRoles(list);
         return super.create(user);
+    }
+
+    @Override
+    @Transactional
+    public void approve(Long userId) {
+        User currentUser = this.authContext.isAuthenticated().hasRole("ROLE_ADMIN").getUser();
+        User user = this.findOne(userId).orElseThrow(() -> new HttpStatusException("User not found", HttpStatus.NOT_FOUND));
+        user.setApprovedBy(currentUser.getName());
+        this.update(user);
     }
 
     @Override

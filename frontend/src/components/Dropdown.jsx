@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 const Dropdown = ({ children, menuItems }) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <MenuButton className="flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded text-base text-white hover:bg-gray-700 focus:outline-none">
+      <MenuButton className="flex items-center space-x-2 bg-transparent px-4 py-2 rounded text-base text-white hover:bg-gray-700 focus:outline-none">
         {children}
         <ChevronDownIcon className="h-5 w-5" />
       </MenuButton>

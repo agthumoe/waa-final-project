@@ -35,4 +35,11 @@ public class RatingController {
     public List<UserRatingDto> getProductRatings(@PathVariable Long productId) {
         return this.mapper.map(this.ratingService.getRatingsByProductId(productId), UserRatingDto.class);
     }
+
+    @DeleteMapping("/ratings/{ratingId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    public void deleteRating(@PathVariable Long ratingId) {
+        this.ratingService.deleteById(ratingId);
+    }
 }

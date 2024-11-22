@@ -147,4 +147,31 @@ export const giveRating = async (productId, data) => {
   return response.data;
 };
 
+export const deleteRating = async (id) => {
+  const response = await api.delete(`/ratings/${id}`);
+  return response.data;
+};
+
+export const getAllUsers = async (params) => {
+  const response = await api.get('/users', {
+    params,
+  });
+  return response.data;
+};
+
+export const approveUser = async (id) => {
+  const response = await api.put(`/users/${id}/approve`);
+  return response.data;
+};
+
+export const createProduct = async (data) => {
+  const response = await api.post('/products', data);
+  return response.data;
+};
+
+export const updateProduct = async (id, data) => {
+  const response = await api.put(`/products/${id}`, data);
+  return response.data;
+};
+
 export default api;

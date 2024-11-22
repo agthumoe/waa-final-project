@@ -21,7 +21,7 @@ public class LoggerAspect {
     public void serviceAnyMethodPointCut() {
     }
 
-    @AfterThrowing(value = "serviceAnyMethodPointCut()", throwing = "ex")
+    @AfterThrowing(value = "controllerAnyMethodPointcut()", throwing = "ex")
     public void logException(JoinPoint joinPoint, Exception ex) {
         LOGGER.error("Exception in method {}: {}", joinPoint.getSignature(), ex.getMessage());
     }

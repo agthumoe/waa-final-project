@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { Form, Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { register } from '../api/api';
 import Button from '../components/Button';
@@ -8,6 +8,7 @@ import Field from '../components/Field';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import SelectField from '../components/SelectField';
+import useNotificationStore from '../hooks/useNotificationStore';
 
 const initialValues = {
   name: '',
@@ -29,12 +30,16 @@ const validationSchema = Yup.object({
 });
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { notify } = useNotificationStore();
   const mutation = useMutation({
     mutationFn: register,
   });
 
   const handleSubmit = async (values) => {
     mutation.mutate(values);
+    notify('Account created successfully');
+    navigate('/login');
   };
 
   return (

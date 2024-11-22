@@ -47,19 +47,21 @@ public class ProductController {
 
     @PostMapping
     @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
+    @PreAuthorize("hasAnyRole('ROLE_SELLER')")
     public ProductDto createProduct(@RequestBody @Validated ProductRequest request) {
-        Product product = mapper.map(request, Product.class);
+        Product product = new Product();
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setBasePrice(request.getBasePrice());
+        product.setEnabled(request.getEnabled());
         return mapper.map(productService.create(product, request.getSubCategoryId(), request.getBrandId(), request.getFileId()), ProductDto.class);
     }
 
     @PutMapping("{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
+    @PreAuthorize("hasAnyRole('ROLE_SELLER')")
     @SecurityRequirement(name = "bearerAuth")
-    public ProductDto updateProduct(@PathVariable Long id, @RequestBody @Validated ProductRequest request) {
-        Product product = productService.findOne(id).orElseThrow(() -> new HttpStatusException("Product not found", 404));
-        this.mapper.map(request, product);
-        return mapper.map(productService.update(product, request.getSubCategoryId(), request.getBrandId(), request.getFileId()), ProductDto.class);
+    public void updateProduct(@PathVariable Long id, @RequestBody @Validated ProductRequest request) {
+       productService.update(id, request);
     }
 
     @DeleteMapping("{id}")

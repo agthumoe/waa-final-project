@@ -56,4 +56,11 @@ public class UserController {
         this.mapper.map(request, user);
         this.userService.update(user);
     }
+
+    @PutMapping("{id}/approve")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void approve(@PathVariable Long id) {
+        this.userService.approve(id);
+    }
 }

@@ -76,9 +76,19 @@ const Navbar = () => {
                     <span className="text-white font-medium">{initials}</span>
                   )}
                 </div>
-                <span>{data?.username || 'User'}</span>
+                <span>{data?.name || 'User'}</span>
               </div>
             </Dropdown>
+          )}
+          {isAuthenticated && _.includes(data?.roles, 'ROLE_SELLER') && (
+            <Link to="/seller">
+              <Button color="danger">Seller</Button>
+            </Link>
+          )}
+          {isAuthenticated && _.includes(data?.roles, 'ROLE_ADMIN') && (
+            <Link to="/admin">
+              <Button>Admin</Button>
+            </Link>
           )}
         </div>
         <button className="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-gray-300">

@@ -7,6 +7,7 @@ import edu.miu.project.models.Brand;
 import edu.miu.project.models.Product;
 import edu.miu.project.models.SubCategory;
 import edu.miu.project.models.User;
+import edu.miu.project.models.dtos.ProductRequest;
 import edu.miu.project.repositories.*;
 import edu.miu.project.securities.AuthContext;
 import edu.miu.project.securities.SecurityUtils;
@@ -48,7 +49,8 @@ public class ProductServiceImpl extends AbstractMutableService<Product> implemen
     @Transactional
     public Product create(Product product, Long subCategoryId, Long brandId, Long fileId) {
         // validate and set login user as seller.
-        product.setSeller(this.authContext.isAuthenticated().isSeller().isApproved().getUser());
+        User seller = this.authContext.isAuthenticated().isSeller().isApproved().getUser();
+        product.setSeller(seller);
         Brand brand = this.brandRepository.findById(brandId).orElseThrow(() -> new HttpStatusException("Brand not found", 404));
         SubCategory subCategory = this.subCategoryRepository.findById(subCategoryId).orElseThrow(() -> new HttpStatusException("Sub category not found", 404));
         product.setBrand(brand);
@@ -61,17 +63,26 @@ public class ProductServiceImpl extends AbstractMutableService<Product> implemen
 
     @Override
     @Transactional
-    public Product update(Product product, Long subCategoryId, Long brandId, Long fileId) {
+    public Product update(Long id, ProductRequest request) {
+        Product product = ((ProductRepository) this.repository).findById(id).orElseThrow(() -> new HttpStatusException("Product not found", 404));
         // validate login user is seller and is the owner of the product.
-        this.authContext.isAuthenticated().isSeller().isApproved().hasId(product.getId());
-        Brand brand = this.brandRepository.findById(brandId).orElseThrow(() -> new HttpStatusException("Brand not found", 404));
-        SubCategory subCategory = this.subCategoryRepository.findById(subCategoryId).orElseThrow(() -> new HttpStatusException("Sub category not found", 404));
+        Long sellerId = product.getSeller().getId();
+        User currentUser = this.authContext.isAuthenticated().isSeller().isApproved().getUser();
+        if (!sellerId.equals(currentUser.getId())) {
+            throw new HttpStatusException("You are not the owner of this product", 400);
+        }
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setBasePrice(request.getBasePrice());
+        product.setEnabled(request.getEnabled());
+        Brand brand = this.brandRepository.findById(request.getBrandId()).orElseThrow(() -> new HttpStatusException("Brand not found", 404));
+        SubCategory subCategory = this.subCategoryRepository.findById(request.getSubCategoryId()).orElseThrow(() -> new HttpStatusException("Sub category not found", 404));
         product.setBrand(brand);
         product.setSubCategory(subCategory);
-        if (fileId != null) {
-            product.setFile(this.fileRepository.findById(fileId).orElseThrow(() -> new HttpStatusException("File not found", 404)));
+        if (request.getFileId() != null) {
+            product.setFile(this.fileRepository.findById(request.getFileId()).orElseThrow(() -> new HttpStatusException("File not found", 404)));
         }
-        return this.update(product);
+        return this.repository.save(product);
     }
 
     @Override
