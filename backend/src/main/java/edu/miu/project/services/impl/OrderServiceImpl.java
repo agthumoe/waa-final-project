@@ -30,18 +30,16 @@ import java.util.UUID;
 public class OrderServiceImpl extends AbstractImmutableService<Order> implements OrderService {
     private final AddressRepository addressRepository;
     private final CustomMapper mapper;
-    private final AuthContext authContext;
     private final CartService cartService;
     private final CartItemRepository cartItemRepository;
     private final OrderItemRepository orderItemRepository;
     private static final Logger Logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
-    public OrderServiceImpl(OrderRepository repository, AddressRepository addressRepository, CustomMapper mapper, AuthContext authContext, CartService cartService, CartItemRepository cartItemRepository, OrderItemRepository orderItemRepository) {
+    public OrderServiceImpl(OrderRepository repository, AddressRepository addressRepository, CustomMapper mapper, CartService cartService, CartItemRepository cartItemRepository, OrderItemRepository orderItemRepository) {
         super(repository);
         this.addressRepository = addressRepository;
         this.mapper = mapper;
-        this.authContext = authContext;
         this.cartService = cartService;
         this.cartItemRepository = cartItemRepository;
         this.orderItemRepository = orderItemRepository;
