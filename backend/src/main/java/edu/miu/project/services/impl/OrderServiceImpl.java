@@ -64,6 +64,8 @@ public class OrderServiceImpl extends AbstractImmutableService<Order> implements
         order.setShippingAddress(this.mapper.map(address, ShippingAddress.class));
         Cart cart = this.cartService.getCart();
         order.setBuyer(cart.getBuyer());
+        // this logic is not very correct yet.
+        order.setSeller(cart.getItems().getFirst().getVariant().getProduct().getSeller());
         double total = 0.0;
         for (CartItem cartItem : cart.getItems()) {
             Double priceAtOrder = cartItem.getVariant().getPrice();
@@ -76,6 +78,8 @@ public class OrderServiceImpl extends AbstractImmutableService<Order> implements
             OrderItem orderItem = new OrderItem();
             orderItem.setVariant(cartItem.getVariant());
             orderItem.setQuantity(cartItem.getQuantity());
+            Variant variant = cartItem.getVariant();
+            variant.setStock(variant.getStock() - cartItem.getQuantity());
             Double priceAtOrder = cartItem.getVariant().getPrice();
             orderItem.setPriceAtOrder(priceAtOrder);
             orderItem.setOrder(order);
@@ -90,6 +94,12 @@ public class OrderServiceImpl extends AbstractImmutableService<Order> implements
     @Transactional
     public void updateStatus(Long orderId, OrderStatus status) {
         Order order = this.findOne(orderId).orElseThrow(() -> new HttpStatusException("Order not found", 404));
+        if (!OrderStatus.PENDING.equals(order.getStatus()) && OrderStatus.CANCELLED.equals(status)) {
+            throw new HttpStatusException("Order can only be cancelled when it is pending", 400);
+        }
+        if (OrderStatus.CANCELLED.equals(order.getStatus()) || OrderStatus.DELIVERED.equals(order.getStatus())) {
+            throw new HttpStatusException("Order status cannot be updated anymore.", 400);
+        }
         order.setStatus(status);
         this.repository.save(order);
     }
@@ -97,6 +107,11 @@ public class OrderServiceImpl extends AbstractImmutableService<Order> implements
     @Override
     public List<OrderItem> getOrderItems(Long orderId) {
         return this.orderItemRepository.findAllByOrderId(orderId);
+    }
+
+    @Override
+    public Page<Order> findAllBySellerId(Long sellerId, Pageable pageable) {
+        return ((OrderRepository) this.repository).findAllBySellerId(sellerId, pageable);
     }
 
 

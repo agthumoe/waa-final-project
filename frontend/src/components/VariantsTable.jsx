@@ -32,6 +32,9 @@ const VariantsTable = ({ variants = [] }) => {
             <th className="px-2 py-2 text-left text-sm font-medium text-gray-700">
               Price
             </th>
+            <th className="px-2 py-2 text-left text-sm font-medium text-gray-700">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -45,6 +48,11 @@ const VariantsTable = ({ variants = [] }) => {
               <td className="px-2 py-2 text-sm">{variant.year || 'N/A'}</td>
               <td className="px-2 py-2 text-sm">{variant.stock || 0}</td>
               <td className="px-2 py-2 text-sm">${variant.price || 'N/A'}</td>
+              <td className="px-2 py-2 text-sm">
+                <button className="p-1 text-blue-500 hover:blue-red-600 hover:bg-blue-100 rounded transition-colors duration-300">
+                  Update Stock
+                </button>
+              </td>
             </tr>
           ))}
           {_.isEmpty(variants) && (

@@ -1,11 +1,30 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { deleteProduct } from '../api/api';
+import useNotificationStore from '../hooks/useNotificationStore';
 import Button from './Button';
 import Loading from './Loading';
 import VariantsTable from './VariantsTable';
 
 const ProductDetails = ({ product, mutable = false }) => {
+  const { notify } = useNotificationStore();
+  const navigate = useNavigate();
+
+  const handleDelete = (id) => {
+    deleteProduct(id)
+      .then(() => {
+        notify('Product deleted successfully');
+        navigate('/seller/products');
+      })
+      .catch((e) => {
+        notify(
+          e?.response?.data?.message || 'Failed to delete product',
+          'error'
+        );
+      });
+  };
+
   if (!product) {
     return <Loading />;
   }
@@ -18,7 +37,11 @@ const ProductDetails = ({ product, mutable = false }) => {
             <Link to={`/seller/products/${product.id}/edit`}>
               <Button>Edit</Button>
             </Link>
-            <Button color="danger" className="ml-2">
+            <Button
+              color="danger"
+              className="ml-2"
+              onClick={() => handleDelete(product.id)}
+            >
               Delete
             </Button>
           </div>
@@ -84,7 +107,14 @@ const ProductDetails = ({ product, mutable = false }) => {
           </p>
         </div>
       </div>
-      <VariantsTable variants={product.variants} />
+      <div className="mt-6">
+        <div className="flex justify-end">
+          <Link to={`/seller/products/${product.id}/variants/create`}>
+            <Button>Add Variant</Button>
+          </Link>
+        </div>
+        <VariantsTable variants={product.variants} mutable />
+      </div>
     </div>
   );
 };

@@ -4,4 +4,5 @@ import edu.miu.project.commons.services.MutableService;
 import edu.miu.project.models.Variant;
 
 public interface VariantService extends MutableService<Variant> {
+    void addVariantToProduct(Long productId, Variant variant);
 }

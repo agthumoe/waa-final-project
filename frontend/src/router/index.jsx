@@ -6,6 +6,7 @@ import AdminDashboard from '../pages/admin/AdminDashboard';
 import ProductDetailsPage from '../pages/admin/ProductDetailsPage';
 import ProductList from '../pages/admin/ProductList';
 import UserList from '../pages/admin/UserList';
+import BuyerOrderDetails from '../pages/buyers/BuyerOrderDetails';
 import Cart from '../pages/Cart';
 import Categories from '../pages/Categories';
 import Contact from '../pages/Contact';
@@ -16,15 +17,17 @@ import RootLayout from '../pages/layouts/RootLayout';
 import SellerAuthLayout from '../pages/layouts/SellerAuthLayout';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
-import OrderDetails from '../pages/OrderDetails';
 import Product from '../pages/Product';
 import Products from '../pages/Products';
+import ProductVariantCreate from '../pages/ProductVariantCreate';
 import Profile from '../pages/Profile';
 import Register from '../pages/Register';
 import Review from '../pages/Review';
 import ProductCreate from '../pages/seller/ProductCreate';
 import ProductUpdate from '../pages/seller/ProductUpdate';
 import SellerDashboard from '../pages/seller/SellerDashboard';
+import SellerOrderDetails from '../pages/seller/SellerOrderDetails';
+import SellerOrderList from '../pages/seller/SellerOrderList';
 import SellerProductDetailsPage from '../pages/seller/SellerProductDetailsPage';
 import SellerProductList from '../pages/seller/SellerProductList';
 import Shops from '../pages/Shops';
@@ -107,7 +110,7 @@ const router = createBrowserRouter(
             },
             {
               path: 'orders/:id',
-              element: <OrderDetails />,
+              element: <BuyerOrderDetails />,
             },
             {
               path: 'products/:id/reviews',
@@ -138,6 +141,18 @@ const router = createBrowserRouter(
             {
               path: 'products/:id/edit',
               element: <ProductUpdate />,
+            },
+            {
+              path: 'products/:id/variants/create',
+              element: <ProductVariantCreate />,
+            },
+            {
+              path: 'orders',
+              element: <SellerOrderList />,
+            },
+            {
+              path: 'orders/:id',
+              element: <SellerOrderDetails />,
             },
           ],
         },

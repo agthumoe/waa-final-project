@@ -1,11 +1,14 @@
 import { TrashIcon } from '@heroicons/react/16/solid';
 import { EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
+import { deleteProduct } from '../../api/api';
 import Button from '../../components/Button';
 import Loading from '../../components/Loading';
 import Pagination from '../../components/Pagination';
 import ProductFilter from '../../components/ProductFilter';
+import useNotificationStore from '../../hooks/useNotificationStore';
 import useProductFilter from '../../hooks/useProductFilter';
 import useProfile from '../../hooks/useProfile';
 
@@ -14,6 +17,22 @@ const SellerProductList = () => {
   const { data, isLoading, initialValues, handleSubmit } = useProductFilter(
     profile.id
   );
+  const queryClient = useQueryClient();
+  const { notify } = useNotificationStore();
+
+  const handleDelete = (id) => {
+    deleteProduct(id)
+      .then(() => {
+        notify('Product deleted successfully');
+        queryClient.invalidateQueries('products');
+      })
+      .catch((e) => {
+        notify(
+          e?.response?.data?.message || 'Failed to delete product',
+          'error'
+        );
+      });
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -73,10 +92,19 @@ const SellerProductList = () => {
                     {product.subCategory?.name}
                   </td>
                   <td className="px-4 py-2 text-sm">${product.basePrice}</td>
-                  <td className="px-4 py-2 text-sm">{product.stock || 0}</td>
+                  <td className="px-4 py-2 text-sm">
+                    {Number(product.stock) === 0 ? (
+                      <span className="text-red-500">Out of Stock</span>
+                    ) : (
+                      product.stock
+                    )}
+                  </td>
                   <td className="px-4 py-2 text-sm space-x-1">
                     <div className="flex">
-                      <button className="p-1 text-red-500 hover:text-red-600 hover:bg-red-100 rounded transition-colors duration-300">
+                      <button
+                        onClick={() => handleDelete(product.id)}
+                        className="p-1 text-red-500 hover:text-red-600 hover:bg-red-100 rounded transition-colors duration-300"
+                      >
                         <TrashIcon className="h-4 w-4" />
                       </button>
                       <Link

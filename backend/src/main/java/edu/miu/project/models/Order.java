@@ -1,5 +1,6 @@
 package edu.miu.project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.project.commons.models.ImmutableModel;
 import edu.miu.project.models.enums.OrderStatus;
 import edu.miu.project.models.enums.PaymentMethod;
@@ -30,6 +31,10 @@ public class Order extends ImmutableModel {
     @ManyToOne(optional = false)
     @JoinColumn(name = "buyer_id", nullable = false, updatable = false)
     private User buyer;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "seller_id", nullable = false, updatable = false)
+    @JsonIgnore
+    private User seller;
     @Embedded
     private ShippingAddress shippingAddress;
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

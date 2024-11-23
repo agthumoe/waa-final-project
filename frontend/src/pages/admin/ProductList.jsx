@@ -62,7 +62,13 @@ const ProductList = () => {
                     {product.subCategory?.name}
                   </td>
                   <td className="px-4 py-2 text-sm">${product.basePrice}</td>
-                  <td className="px-4 py-2 text-sm">{product.stock || 0}</td>
+                  <td className="px-4 py-2 text-sm">
+                    {Number(product.stock) === 0 ? (
+                      <span className="text-red-500">Out of Stock</span>
+                    ) : (
+                      product.stock
+                    )}
+                  </td>
                   <td className="px-4 py-2 text-sm">
                     <Link to={`/admin/products/${product.id}`}>
                       <Button>View</Button>

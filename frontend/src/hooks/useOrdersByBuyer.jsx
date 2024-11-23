@@ -3,7 +3,7 @@ import { getOrdersByBuyer } from '../api/api';
 
 function useOrdersByBuyer(buyerId) {
   return useQuery({
-    queryKey: ['orders', buyerId],
+    queryKey: ['ordersByBuyer', buyerId],
     queryFn: () => getOrdersByBuyer(buyerId),
     initialData: { content: [], page: {} },
     enabled: !!buyerId,

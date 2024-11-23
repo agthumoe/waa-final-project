@@ -29,11 +29,19 @@ public class OrderController {
         return this.mapper.map(this.orderService.findAll(pageable), OrderDto.class);
     }
 
+    @PreAuthorize("hasAnyRole('BUYER', 'ADMIN')")
     @GetMapping("/buyers/{buyerId}/orders")
     public Page<OrderDto> getAllByBuyer(@PathVariable Long buyerId, Pageable pageable) {
         return this.mapper.map(this.orderService.findAllByBuyerId(buyerId, pageable), OrderDto.class);
     }
 
+    @PreAuthorize("hasAnyRole('SELLER', 'ADMIN')")
+    @GetMapping("/sellers/{sellerId}/orders")
+    public Page<OrderDto> getAllBySeller(@PathVariable Long sellerId, Pageable pageable) {
+        return this.mapper.map(this.orderService.findAllBySellerId(sellerId, pageable), OrderDto.class);
+    }
+
+    @PreAuthorize("hasAnyRole('SELLER')")
     @PutMapping("/orders/{orderId}")
     public void updateOrder(@PathVariable Long orderId, @RequestBody @Validated OrderUpdateRequest request) {
         this.orderService.updateStatus(orderId, request.getStatus());

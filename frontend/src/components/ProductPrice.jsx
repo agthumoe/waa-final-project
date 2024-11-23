@@ -26,7 +26,7 @@ const ProductPrice = ({ basePrice, variant }) => {
         )}
       </p>
       {stock > 0 ? (
-        <p className="text-sm text-green-600">In Stock</p>
+        <p className="text-sm text-green-600">In stock</p>
       ) : (
         <p className="text-sm text-red-600">Out of Stock</p>
       )}
