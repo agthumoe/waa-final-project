@@ -130,9 +130,11 @@ const Cart = () => {
 
             <div className="flex flex-col items-center gap-2">
               {_.isEmpty(addresses) ? (
-                <div>
+                <div className="flex flex-col items-center gap-2 mt-5">
                   <p className="text-gray-500">No addresses found!</p>
-                  <Link to="/addresses">Add Address</Link>
+                  <Button>
+                    <Link to="/buyer/addresses">Add Address</Link>
+                  </Button>
                 </div>
               ) : (
                 <>

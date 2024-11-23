@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface OrderItemRepository extends AbstractRepository<OrderItem> {
-    @EntityGraph(attributePaths = {"variant", "variant.product"})
+    @EntityGraph(attributePaths = {"variant", "variant.product", "variant.product.file"})
     List<OrderItem> findAllByOrderId(Long orderId);
 }

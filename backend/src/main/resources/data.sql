@@ -146,18 +146,25 @@ VALUES
 ('Birthday', 'OCCASION', NOW(), NOW(), 'system', 'system'),
 ('Anniversary', 'OCCASION', NOW(), NOW(), 'system', 'system');
 
-INSERT INTO products (seller_id, name, description, base_price, brand_id, sub_category_id, created_at, last_modified_at, created_by, last_modified_by) VALUES
+INSERT INTO files (content_type, url, created_at, created_by)
+VALUES
+    ( 'image/jpeg',  'https://miu-waa-final-project.s3.amazonaws.com/DYO-Black-356x356.jpg', NOW(), 'system'),
+    ('image/jpeg', 'https://miu-waa-final-project.s3.amazonaws.com/gptr,1265x,front,black-c,330,402,600,600-bg,f8f8f8.jpg', NOW(), 'system'),
+    ('image/jpeg',  'https://miu-waa-final-project.s3.amazonaws.com/s-l1200.jpg', NOW(), 'system'),
+    ( 'image/jpeg', 'https://miu-waa-final-project.s3.amazonaws.com/bifold-leather-wallet-for-men-made-in-usa-men-s-bifold-wallets-american-made-main-street-forge-wallet-tobacco-snakebite-brown-30147278340255_1600x.jpg', NOW(), 'system');
+
+INSERT INTO products (seller_id, name, description, base_price, brand_id, sub_category_id, created_at, last_modified_at, created_by, last_modified_by, file_id) VALUES
 -- Clothing
 (1, 'Premium Cotton T-Shirt', 'Soft and breathable cotton t-shirt for everyday use', 25.99, 1, 1, NOW(), NOW(),
- 'anonymousUser', 'anonymousUser'),
+ 'anonymousUser', 'anonymousUser', 1),
 (1, 'Slim Fit Formal Shirt', 'Smart formal shirt suitable for office wear', 45.99, 2, 2, NOW(), NOW(), 'anonymousUser',
- 'anonymousUser'),
+ 'anonymousUser', 2),
 (1, 'Evening Gown', 'Elegant evening gown perfect for parties', 120.00, 3, 3, NOW(), NOW(), 'anonymousUser',
- 'anonymousUser'),
-
--- Accessories
+ 'anonymousUser', 3),
 (5, 'Leather Wallet', 'Compact and stylish wallet made from genuine leather', 30.50, 4, 4, NOW(), NOW(), 'anonymousUser',
- 'anonymousUser'),
+ 'anonymousUser', 4);
+
+INSERT INTO products (seller_id, name, description, base_price, brand_id, sub_category_id, created_at, last_modified_at, created_by, last_modified_by) VALUES
 (5, 'Sun Hat', 'Lightweight and comfortable hat for sunny days', 15.00, 5, 5, NOW(), NOW(), 'anonymousUser',
  'anonymousUser'),
 (5, 'Crystal Pendant Necklace', 'Exquisite necklace with a crystal pendant', 75.99, 6, 6, NOW(), NOW(), 'anonymousUser',
@@ -352,4 +359,3 @@ VALUES
     (5, '789 Pine Road', 'Miami', 'Florida', '33103', 'USA', '2024-11-21T09:10:00.000Z', 'system', '2024-11-21T09:10:00.000Z', 'system'),
     (5, '101 Maple Lane', 'Miami', 'Florida', '33104', 'USA', '2024-11-21T09:15:00.000Z', 'system', '2024-11-21T09:15:00.000Z', 'system'),
     (5, '202 Birch Street', 'Miami', 'Florida', '33105', 'USA', '2024-11-21T09:20:00.000Z', 'system', '2024-11-21T09:20:00.000Z', 'system');
-

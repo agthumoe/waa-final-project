@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CartRepository extends AbstractRepository<Cart> {
-    @EntityGraph(attributePaths = {"items", "buyer", "items.variant", "items.variant.product"})
+    @EntityGraph(attributePaths = {"items", "buyer", "items.variant", "items.variant.product", "items.variant.product.file"})
     Optional<Cart> findByBuyerId(Long buyerId);
 }
