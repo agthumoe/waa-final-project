@@ -11,10 +11,16 @@
 - `backend`: Spring boot application
 - `frontend`: React application
 
+## Project Requirements
+- Java 23
+- Maven 3.8.1
+- Node 21 or later
+
 ## How to run
 
 1. Run backend application
    - Go to `backend` folder
+   - Run `docker-compose up -d` to start the database
    - Copy `application-dev.yml.example` to `application.-dev.yml`
    - Please do not delete `application.yml` file, you need both files
    - Update `application-dev.yml` with your database connection information, and other configurations such as AWS credentials for file upload
