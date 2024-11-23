@@ -2,14 +2,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createOrder, deleteCartItem, updateCartItem } from '../api/api';
-import AddressSelect from '../components/AddressSelect';
-import Button from '../components/Button';
-import Loading from '../components/Loading';
-import useCart from '../hooks/useCart';
-import useNotificationStore from '../hooks/useNotificationStore';
-import useProfile from '../hooks/useProfile';
-import useUserAddresses from '../hooks/useUserAddresses';
+import { createOrder, deleteCartItem, updateCartItem } from '../../api/api';
+import AddressSelect from '../../components/AddressSelect';
+import Button from '../../components/Button';
+import Loading from '../../components/Loading';
+import useCart from '../../hooks/useCart';
+import useNotificationStore from '../../hooks/useNotificationStore';
+import useProfile from '../../hooks/useProfile';
+import useUserAddresses from '../../hooks/useUserAddresses';
 
 const Cart = () => {
   const { data, isLoading } = useCart();

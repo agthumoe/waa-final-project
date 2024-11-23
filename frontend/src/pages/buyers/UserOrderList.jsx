@@ -2,12 +2,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { updateOrder } from '../api/api';
-import Button from '../components/Button';
-import Loading from '../components/Loading';
-import useNotificationStore from '../hooks/useNotificationStore';
-import useOrdersByBuyer from '../hooks/useOrdersByBuyer';
-import useProfile from '../hooks/useProfile';
+import { updateOrder } from '../../api/api';
+import Button from '../../components/Button';
+import Loading from '../../components/Loading';
+import useNotificationStore from '../../hooks/useNotificationStore';
+import useOrdersByBuyer from '../../hooks/useOrdersByBuyer';
+import useProfile from '../../hooks/useProfile';
 
 const UserOrderList = () => {
   const { data: profile, isLoading } = useProfile();
@@ -26,8 +26,6 @@ const UserOrderList = () => {
   if (isLoading || isOrderLoading) {
     return <Loading />;
   }
-
-  console.log(data);
 
   return (
     <div className="container mx-auto p-4 mt-10 flex-1">

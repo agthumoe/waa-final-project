@@ -24,11 +24,14 @@ const StatusUpdateModal = ({ isOpen, closeModal, orderId, currentStatus }) => {
 
   const handleSubmit = () => {
     closeModal();
-    console.log({ orderId, status });
-    updateOrder(orderId, { status }).then(() => {
-      notify('Order status updated successfully');
-      queryClient.invalidateQueries('orders', orderId);
-    });
+    updateOrder(orderId, { status })
+      .then(() => {
+        notify('Order status updated successfully');
+        queryClient.invalidateQueries('orders', orderId);
+      })
+      .catch((e) => {
+        notify(e?.response?.data?.message || 'Failed to update order status');
+      });
   };
 
   return (

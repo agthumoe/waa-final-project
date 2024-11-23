@@ -124,7 +124,6 @@ export const updateAddress = async (id, data) => {
 };
 
 export const updateOrder = async (id, data) => {
-  console.log('here we are ', id, data);
   const response = await api.put(`/orders/${id}`, data);
   return response.data;
 };

@@ -2,11 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { Form, Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
-import { giveRating } from '../api/api';
-import Button from '../components/Button';
-import Field from '../components/Field';
-import TextAreaField from '../components/TextAreaField';
-import useNotificationStore from '../hooks/useNotificationStore';
+import { giveRating } from '../../api/api';
+import Button from '../../components/Button';
+import Field from '../../components/Field';
+import TextAreaField from '../../components/TextAreaField';
+import useNotificationStore from '../../hooks/useNotificationStore';
 
 const initialValues = {
   rating: '',

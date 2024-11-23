@@ -1,31 +1,36 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Form, Formik } from 'formik';
-import { createAddress } from '../api/api';
-import Button from '../components/Button';
-import Field from '../components/Field';
-import useNotificationStore from '../hooks/useNotificationStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { updateAddress } from '../../api/api';
+import Button from '../../components/Button';
+import Field from '../../components/Field';
+import Loading from '../../components/Loading';
+import useNotificationStore from '../../hooks/useNotificationStore';
+import useOneAddress from '../../hooks/useOneAddress';
 
-const AddressCreate = () => {
+const AddressUpdate = () => {
+  const { id } = useParams();
+
+  const { data, isLoading } = useOneAddress(id);
   const queryClient = useQueryClient();
   const { notify } = useNotificationStore();
   const navigate = useNavigate();
-
-  const initialValues = {
-    street: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
-  };
+  const initialValues = data?.id
+    ? data
+    : {
+        street: '',
+        city: '',
+        state: '',
+        zip: '',
+        country: '',
+      };
 
   const mutation = useMutation({
-    mutationFn: (values) => createAddress(values),
+    mutationFn: (values) => updateAddress(id, values),
     onSuccess: () => {
-      console.log('onSuccess');
       queryClient.invalidateQueries('oneAddress');
+      notify('Address updated successfully');
       navigate('/buyer/addresses');
-      notify('Address created successfully');
     },
   });
 
@@ -33,13 +38,21 @@ const AddressCreate = () => {
     mutation.mutate(values);
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="container mx-auto p-4 mt-10 flex-1">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">
         User Addresses Update
       </h1>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          enableReinitialize
+        >
           <Form className="space-y-6">
             <Field label="Street" name="street" placeholder="Street" />
             <Field label="City" name="city" placeholder="City" />
@@ -50,7 +63,7 @@ const AddressCreate = () => {
               <Button type="reset" color="danger">
                 Reset
               </Button>
-              <Button type="submit">Create</Button>
+              <Button type="submit">Update</Button>
             </div>
           </Form>
         </Formik>
@@ -59,4 +72,4 @@ const AddressCreate = () => {
   );
 };
 
-export default AddressCreate;
+export default AddressUpdate;

@@ -1,13 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import About from '../pages/About';
-import AddressCreate from '../pages/AddressCreate';
-import AddressUpdate from '../pages/AddressUpdate';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import ProductDetailsPage from '../pages/admin/ProductDetailsPage';
 import ProductList from '../pages/admin/ProductList';
 import UserList from '../pages/admin/UserList';
+import AddressCreate from '../pages/buyers/AddressCreate';
+import AddressUpdate from '../pages/buyers/AddressUpdate';
 import BuyerOrderDetails from '../pages/buyers/BuyerOrderDetails';
-import Cart from '../pages/Cart';
+import Cart from '../pages/buyers/Cart';
+import Review from '../pages/buyers/Review';
+import UserAddresses from '../pages/buyers/UserAddresses';
+import UserOrderList from '../pages/buyers/UserOrderList';
 import Categories from '../pages/Categories';
 import Contact from '../pages/Contact';
 import Home from '../pages/Home';
@@ -22,7 +25,6 @@ import Products from '../pages/Products';
 import ProductVariantCreate from '../pages/ProductVariantCreate';
 import Profile from '../pages/Profile';
 import Register from '../pages/Register';
-import Review from '../pages/Review';
 import ProductCreate from '../pages/seller/ProductCreate';
 import ProductUpdate from '../pages/seller/ProductUpdate';
 import SellerDashboard from '../pages/seller/SellerDashboard';
@@ -31,8 +33,6 @@ import SellerOrderList from '../pages/seller/SellerOrderList';
 import SellerProductDetailsPage from '../pages/seller/SellerProductDetailsPage';
 import SellerProductList from '../pages/seller/SellerProductList';
 import Shops from '../pages/Shops';
-import UserAddresses from '../pages/UserAddresses';
-import UserOrderList from '../pages/UserOrderList';
 
 const router = createBrowserRouter(
   [

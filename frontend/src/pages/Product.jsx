@@ -18,7 +18,7 @@ import useProfile from '../hooks/useProfile';
 
 const Product = () => {
   const params = useParams();
-  const { isAuthenticated } = useProfile();
+  const { isAuthenticated, data: profile } = useProfile();
   const { data: cart } = useCart();
   const { data: product, isLoading } = useOneProduct(params.id);
   const [selectedVariant, setSelectedVariant] = useState();
@@ -247,7 +247,11 @@ const Product = () => {
                 <Button
                   color="primary"
                   onClick={() => setIsModalOpen(true)}
-                  disabled={!isAuthenticated || !availableItem}
+                  disabled={
+                    !isAuthenticated ||
+                    !availableItem ||
+                    !profile?.roles.includes('ROLE_BUYER')
+                  }
                 >
                   Add to Cart
                 </Button>

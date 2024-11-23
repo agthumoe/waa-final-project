@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
-import Loading from '../components/Loading';
-import useProfile from '../hooks/useProfile';
-import useUserAddresses from '../hooks/useUserAddresses';
+import Button from '../../components/Button';
+import Loading from '../../components/Loading';
+import useProfile from '../../hooks/useProfile';
+import useUserAddresses from '../../hooks/useUserAddresses';
 
 const UserAddresses = () => {
   const { data, isLoading } = useProfile();
