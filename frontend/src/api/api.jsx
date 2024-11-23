@@ -190,4 +190,9 @@ export const getOrdersBySeller = async (id) => {
   return response.data;
 };
 
+export const variantStockUpdate = async (id, data) => {
+  const response = await api.put(`/variants/${id}`, data);
+  return response.data;
+};
+
 export default api;

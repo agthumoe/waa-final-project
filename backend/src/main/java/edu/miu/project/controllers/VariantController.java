@@ -1,6 +1,7 @@
 package edu.miu.project.controllers;
 
 import edu.miu.project.commons.CustomMapper;
+import edu.miu.project.commons.exceptions.HttpStatusException;
 import edu.miu.project.models.Variant;
 import edu.miu.project.models.dtos.VariantRequest;
 import edu.miu.project.services.VariantService;
@@ -24,5 +25,14 @@ public class VariantController {
     @PostMapping("/products/{productId}/variants")
     public void createVariant(@PathVariable Long productId, @RequestBody @Validated VariantRequest request) {
         variantService.addVariantToProduct(productId, this.mapper.map(request, Variant.class));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_SELLER')")
+    @SecurityRequirement(name = "bearerAuth")
+    @PutMapping("/variants/{variantId}")
+    public void updateVariant(@PathVariable Long variantId, @RequestBody @Validated VariantRequest request) {
+        Variant variant = this.variantService.findOne(variantId).orElseThrow(() -> new HttpStatusException("Variant not found", 404));
+        variant.setStock(request.getStock());
+        variantService.update(variant);
     }
 }
