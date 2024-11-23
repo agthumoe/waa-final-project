@@ -58,6 +58,13 @@ const SellerOrderList = () => {
               </td>
             </tr>
           ))}
+          {_.isEmpty(orders?.content) && (
+            <tr>
+              <td colSpan="6" className="text-center text-gray-500 mt-5 pt-5">
+                No orders yet
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

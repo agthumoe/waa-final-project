@@ -249,4 +249,31 @@ export const getOneBrand = async (id) => {
   const response = await api.get(`/brands/${id}`);
   return response.data;
 };
+
+export const getHealth = async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_URL}/actuator/health`
+  );
+  return response.data;
+};
+
+export const getMetrics = async () => {
+  const response = await axios.all([
+    axios.get(
+      `${import.meta.env.VITE_API_URL}/actuator/metrics/jvm.memory.used`
+    ),
+    axios.get(
+      `${import.meta.env.VITE_API_URL}/actuator/metrics/system.cpu.count`
+    ),
+    axios.get(
+      `${import.meta.env.VITE_API_URL}/actuator/metrics/process.uptime`
+    ),
+  ]);
+  return response;
+};
+
+export const getOrderCountBySeller = async (id) => {
+  const response = await api.get(`/seller/${id}/orders/count`);
+  return response.data;
+};
 export default api;

@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface OrderRepository extends AbstractRepository<Order> {
     Page<Order> findAllByBuyerId(Long buyerId, Pageable pageable);
     Page<Order> findAllBySellerId(Long sellerId, Pageable pageable);
+    long countBySellerId(Long sellerId);
 }

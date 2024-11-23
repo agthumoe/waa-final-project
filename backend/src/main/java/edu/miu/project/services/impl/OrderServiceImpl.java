@@ -114,5 +114,8 @@ public class OrderServiceImpl extends AbstractImmutableService<Order> implements
         return ((OrderRepository) this.repository).findAllBySellerId(sellerId, pageable);
     }
 
-
+    @Override
+    public long countBySellerId(Long sellerId) {
+        return ((OrderRepository) this.repository).countBySellerId(sellerId);
+    }
 }

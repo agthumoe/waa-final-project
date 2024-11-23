@@ -16,4 +16,5 @@ public interface OrderService extends ImmutableService<Order> {
     void updateStatus(Long orderId, OrderStatus status);
     List<OrderItem> getOrderItems(Long orderId);
     Page<Order> findAllBySellerId(Long sellerId, Pageable pageable);
+    long countBySellerId(Long sellerId);
 }

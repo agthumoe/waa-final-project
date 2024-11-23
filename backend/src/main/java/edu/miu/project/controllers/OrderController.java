@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,15 @@ public class OrderController {
     @PutMapping("/orders/{orderId}")
     public void updateOrder(@PathVariable Long orderId, @RequestBody @Validated OrderUpdateRequest request) {
         this.orderService.updateStatus(orderId, request.getStatus());
+    }
+
+    @GetMapping("/seller/{sellerId}/orders/count")
+    @PreAuthorize("hasAnyRole('ROLE_SELLER')")
+    public ResponseEntity<?> getSellerOrderCount(@PathVariable Long sellerId) {
+        long totalOrders = orderService.countBySellerId(sellerId);
+        CountDto countDto = new CountDto();
+        countDto.setCount(totalOrders);
+        return ResponseEntity.ok(countDto);
     }
 
     @GetMapping("/orders/{orderId}")
