@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import NotificationContainer from '../../containers/NotificationContainer';
+import NotificationContainer from '../../components/NotificationContainer';
 
 const RootLayout = () => {
   return (
