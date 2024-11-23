@@ -42,7 +42,7 @@ public class OrderController {
         return this.mapper.map(this.orderService.findAllBySellerId(sellerId, pageable), OrderDto.class);
     }
 
-    @PreAuthorize("hasAnyRole('SELLER')")
+    @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_BUYER')")
     @PutMapping("/orders/{orderId}")
     public void updateOrder(@PathVariable Long orderId, @RequestBody @Validated OrderUpdateRequest request) {
         this.orderService.updateStatus(orderId, request.getStatus());
