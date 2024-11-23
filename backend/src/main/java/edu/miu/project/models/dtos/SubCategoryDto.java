@@ -9,4 +9,5 @@ import lombok.EqualsAndHashCode;
 public class SubCategoryDto extends Dto {
     private String name;
     private String categoryName;
+    private Long categoryId;
 }

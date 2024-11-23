@@ -28,6 +28,11 @@ public class BrandController {
         return ResponseEntity.ok(this.mapper.map(brandService.findAll(pageable), BrandDto.class));
     }
 
+    @GetMapping("{id}")
+    public BrandDto findOne(@PathVariable Long id) {
+        return this.mapper.map(this.brandService.findOne(id).orElseThrow(() -> new HttpStatusException("Brand ID: " + id + " does not exist.", HttpStatus.NOT_FOUND)), BrandDto.class);
+    }
+
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELLER')")
     @SecurityRequirement(name = "bearerAuth")

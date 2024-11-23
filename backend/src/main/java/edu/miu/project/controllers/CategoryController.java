@@ -36,6 +36,11 @@ public class CategoryController {
         return this.mapper.map(this.categoryService.create(this.mapper.map(request, Category.class)), CategoryDto.class);
     }
 
+    @GetMapping("{id}")
+    public CategoryDto getOne(@PathVariable Long id) {
+        return this.mapper.map(this.categoryService.findOne(id).orElseThrow(() -> new HttpStatusException("Category ID: " + id + " does not exist.", HttpStatus.NOT_FOUND)), CategoryDto.class);
+    }
+
     @PutMapping("{id}")
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

@@ -47,7 +47,7 @@ const CategoriesTable = ({ categories, totalPages, mutable }) => {
               <td className="px-4 py-2 text-sm">{category.lastModifiedBy}</td>
               {mutable && (
                 <td className="px-4 py-2 text-sm">
-                  <Link to={`/auth/categories/${category.id}`}>
+                  <Link to={`${category.id}`}>
                     <Button>Update</Button>
                   </Link>
                 </td>

@@ -55,7 +55,7 @@ const SubCategoriesTable = ({ subCategories, totalPages, mutable }) => {
               </td>
               {mutable && (
                 <td className="px-4 py-2 text-sm">
-                  <Link to={`/admin/subCategories/${subCategory.id}`}>
+                  <Link to={`${subCategory.id}`}>
                     <Button>Update</Button>
                   </Link>
                 </td>

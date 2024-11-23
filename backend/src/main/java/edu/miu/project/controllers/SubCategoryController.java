@@ -2,8 +2,10 @@ package edu.miu.project.controllers;
 
 import edu.miu.project.commons.CustomMapper;
 import edu.miu.project.commons.exceptions.HttpStatusException;
+import edu.miu.project.models.Category;
 import edu.miu.project.models.SubCategory;
 import edu.miu.project.models.dtos.SubCategoryDto;
+import edu.miu.project.services.CategoryService;
 import edu.miu.project.services.SubCategoryService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,11 +21,17 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "SubCategories", description = "SubCategory endpoints for the application")
 public class SubCategoryController {
     private final SubCategoryService subCategoryService;
+    private final CategoryService categoryService;
     private final CustomMapper mapper;
 
     @GetMapping("/subcategories")
     public ResponseEntity<?> findAll(Pageable pageable) {
         return ResponseEntity.ok(this.mapper.map(subCategoryService.findAll(pageable), SubCategoryDto.class));
+    }
+
+    @GetMapping("/subcategories/{id}")
+    public SubCategoryDto findOne(@PathVariable Long id) {
+        return this.mapper.map(this.subCategoryService.findOne(id).orElseThrow(() -> new HttpStatusException("SubCategory ID: " + id + " does not exist.", 404)), SubCategoryDto.class);
     }
 
     @GetMapping("/categories/{id}/subcategories")
@@ -43,7 +51,9 @@ public class SubCategoryController {
     @SecurityRequirement(name = "bearerAuth")
     public void update(@PathVariable Long id, @RequestBody SubCategoryDto subCategoryDto) {
         SubCategory subCategory = this.subCategoryService.findOne(id).orElseThrow(() -> new HttpStatusException("SubCategory ID: " + id + " does not exist.", 404));
-        this.mapper.map(subCategoryDto, subCategory);
+        subCategory.setName(subCategoryDto.getName());
+        Category category = this.categoryService.findOne(subCategoryDto.getCategoryId()).orElseThrow(() -> new HttpStatusException("Category ID: " + subCategoryDto.getCategoryId() + " does not exist.", 404));
+        subCategory.setCategory(category);
         this.subCategoryService.update(subCategory);
     }
 

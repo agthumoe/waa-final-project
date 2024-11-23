@@ -6,9 +6,12 @@ import ProductList from '../pages/admin/ProductList';
 import UserList from '../pages/admin/UserList';
 import BrandCreate from '../pages/auths/BrandCreate';
 import BrandsPage from '../pages/auths/BrandsPage';
+import BrandUpdate from '../pages/auths/BrandUpdate';
+import CategoriesPage from '../pages/auths/CategoriesPage';
 import CategoryCreate from '../pages/auths/CategoryCreate';
-import CategoriesPage from '../pages/auths/CatrgoriesPage';
-import SubCategoryCreate from '../pages/auths/CreateSubCategory';
+import CategoryUpdate from '../pages/auths/CategoryUpdate';
+import SubCategoryCreate from '../pages/auths/SubCategoryCreate';
+import SubCategoryUpdate from '../pages/auths/SubCategoryUpdate';
 import SubCategoriesPage from '../pages/auths/SubCatrgoriesPage';
 import AddressCreate from '../pages/buyers/AddressCreate';
 import AddressUpdate from '../pages/buyers/AddressUpdate';
@@ -184,6 +187,18 @@ const router = createBrowserRouter(
               path: 'brands/create',
               element: <BrandCreate />,
             },
+            {
+              path: 'categories/:id',
+              element: <CategoryUpdate />,
+            },
+            {
+              path: 'subcategories/:id',
+              element: <SubCategoryUpdate />,
+            },
+            {
+              path: 'brands/:id',
+              element: <BrandUpdate />,
+            },
           ],
         },
         {
@@ -229,6 +244,18 @@ const router = createBrowserRouter(
             {
               path: 'brands/create',
               element: <BrandCreate />,
+            },
+            {
+              path: 'categories/:id',
+              element: <CategoryUpdate />,
+            },
+            {
+              path: 'subcategories/:id',
+              element: <SubCategoryUpdate />,
+            },
+            {
+              path: 'brands/:id',
+              element: <BrandUpdate />,
             },
           ],
         },

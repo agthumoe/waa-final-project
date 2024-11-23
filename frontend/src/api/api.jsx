@@ -235,4 +235,18 @@ export const updateBrand = async (id, data) => {
   return response.data;
 };
 
+export const getOneCategory = async (id) => {
+  const response = await api.get(`/categories/${id}`);
+  return response.data;
+};
+
+export const getOneSubCategory = async (id) => {
+  const response = await api.get(`/subcategories/${id}`);
+  return response.data;
+};
+
+export const getOneBrand = async (id) => {
+  const response = await api.get(`/brands/${id}`);
+  return response.data;
+};
 export default api;
