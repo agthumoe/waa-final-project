@@ -37,7 +37,7 @@ function useProductFilter(sellerId) {
 
   const handleSubmit = (values) => {
     setSearchParams({
-      ..._.omitBy({ ...values, sellerId }, _.isEmpty),
+      ..._.omitBy({ ...values, sellerId }, _.isNil),
       page: 0,
       size,
     });

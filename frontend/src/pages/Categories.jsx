@@ -27,7 +27,7 @@ const Categories = () => {
           {data?.content?.map((category) => (
             <Link
               key={category.id}
-              to={`/category/${category.id}`} // Link to category page
+              to={`/products?categoryId=${category.id}`}
               className="border rounded-lg shadow-md overflow-hidden"
             >
               <Category {...category} />

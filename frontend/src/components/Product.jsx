@@ -8,7 +8,7 @@ const Product = ({ id, file, name, basePrice }) => {
     <Link to={`/products/${id}`}>
       <div key={id} className="group relative hover:cursor-pointer">
         <img
-          src={file || defaultImage}
+          src={file?.url || defaultImage}
           className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-60"
         />
         <div className="mt-4 flex justify-between">

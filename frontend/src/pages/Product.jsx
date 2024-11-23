@@ -61,7 +61,7 @@ const Product = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div>
             <img
-              src={product?.file || 'https://via.placeholder.com/500'}
+              src={product?.file?.url || 'https://via.placeholder.com/500'}
               alt={product?.name}
               className="w-80 h-80 object-cover rounded-lg shadow-md"
             />

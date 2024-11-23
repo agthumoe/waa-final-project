@@ -51,7 +51,7 @@ const ProductDetails = ({ product, mutable = false }) => {
       <div className="flex mb-6">
         {product.file?.url && (
           <img
-            src={product.file.url}
+            src={product.file?.url}
             alt={product.name}
             className="w-48 h-48 object-cover rounded-md shadow-lg mr-6"
           />
