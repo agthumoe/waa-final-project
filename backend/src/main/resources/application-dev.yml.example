@@ -32,3 +32,16 @@ app:
       expiration: 86400000 # 1 day
       refresh-token:
         expiration: 604800000 # 7 days
+
+aws:
+  s3:
+    access-key:
+    secret-key:
+    region:
+    bucket:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
