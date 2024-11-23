@@ -68,11 +68,7 @@ const Shops = () => {
             </div>
           ))}
         </div>
-        <Pagination
-          number={0}
-          totalPages={10}
-          // onPageChange={setCurrentPage}
-        />
+        <Pagination number={0} totalPages={10} />
       </div>
       <Footer />
     </>

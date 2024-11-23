@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { addVariantToProduct } from '../api/api';
-import VariantForm from '../components/VariantForm';
-import useNotificationStore from '../hooks/useNotificationStore';
+import { addVariantToProduct } from '../../api/api';
+import VariantForm from '../../components/VariantForm';
+import useNotificationStore from '../../hooks/useNotificationStore';
 
 const initialValues = {
   size: '',
