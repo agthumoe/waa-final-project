@@ -4,6 +4,12 @@ import AdminDashboard from '../pages/admin/AdminDashboard';
 import ProductDetailsPage from '../pages/admin/ProductDetailsPage';
 import ProductList from '../pages/admin/ProductList';
 import UserList from '../pages/admin/UserList';
+import BrandCreate from '../pages/auths/BrandCreate';
+import BrandsPage from '../pages/auths/BrandsPage';
+import CategoryCreate from '../pages/auths/CategoryCreate';
+import CategoriesPage from '../pages/auths/CatrgoriesPage';
+import SubCategoryCreate from '../pages/auths/CreateSubCategory';
+import SubCategoriesPage from '../pages/auths/SubCatrgoriesPage';
 import AddressCreate from '../pages/buyers/AddressCreate';
 import AddressUpdate from '../pages/buyers/AddressUpdate';
 import BuyerOrderDetails from '../pages/buyers/BuyerOrderDetails';
@@ -154,6 +160,30 @@ const router = createBrowserRouter(
               path: 'orders/:id',
               element: <SellerOrderDetails />,
             },
+            {
+              path: 'categories',
+              element: <CategoriesPage />,
+            },
+            {
+              path: 'subcategories',
+              element: <SubCategoriesPage />,
+            },
+            {
+              path: 'brands',
+              element: <BrandsPage />,
+            },
+            {
+              path: 'categories/create',
+              element: <CategoryCreate />,
+            },
+            {
+              path: 'subcategories/create',
+              element: <SubCategoryCreate />,
+            },
+            {
+              path: 'brands/create',
+              element: <BrandCreate />,
+            },
           ],
         },
         {
@@ -175,6 +205,30 @@ const router = createBrowserRouter(
             {
               path: 'products/:id',
               element: <ProductDetailsPage />,
+            },
+            {
+              path: 'categories',
+              element: <CategoriesPage />,
+            },
+            {
+              path: 'subcategories',
+              element: <SubCategoriesPage />,
+            },
+            {
+              path: 'brands',
+              element: <BrandsPage />,
+            },
+            {
+              path: 'categories/create',
+              element: <CategoryCreate />,
+            },
+            {
+              path: 'subcategories/create',
+              element: <SubCategoryCreate />,
+            },
+            {
+              path: 'brands/create',
+              element: <BrandCreate />,
             },
           ],
         },

@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSubCategories } from '../api/api';
 
-function useSubCategories(categoryId, params) {
+function useSubCategories(params) {
   return useQuery({
-    queryKey: ['subcategories', categoryId, params],
-    queryFn: () => getSubCategories(categoryId, params),
+    queryKey: ['subcategories', params],
+    queryFn: () => getSubCategories(params),
     initialData: { content: [], page: {} },
-    enabled: !!categoryId,
   });
 }
 

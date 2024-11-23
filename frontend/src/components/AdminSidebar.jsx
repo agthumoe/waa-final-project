@@ -54,14 +54,6 @@ const AdminSidebar = () => {
               Brands
             </Link>
           </li>
-          <li>
-            <Link
-              to="/admin/orders"
-              className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded-md"
-            >
-              Orders
-            </Link>
-          </li>
         </ul>
       </div>
     </div>

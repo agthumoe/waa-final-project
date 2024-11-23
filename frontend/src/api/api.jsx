@@ -64,14 +64,22 @@ export const addToCart = async (data) => {
   return response.data;
 };
 
-export const getSubCategories = async (categoryId, params) => {
+export const getSubCategoriesByCategory = async (categoryId, params) => {
   const response = await api.get(`/categories/${categoryId}/subcategories`, {
     params,
   });
   return response.data;
 };
 
+export const getSubCategories = async (params) => {
+  const response = await api.get('/subcategories', {
+    params,
+  });
+  return response.data;
+};
+
 export const getBrands = async (params) => {
+  console.log(params);
   const response = await api.get('/brands', {
     params,
   });
@@ -191,6 +199,39 @@ export const getOrdersBySeller = async (id) => {
 
 export const variantStockUpdate = async (id, data) => {
   const response = await api.put(`/variants/${id}`, data);
+  return response.data;
+};
+
+export const createCategory = async (data) => {
+  const response = await api.post('/categories', data);
+  return response.data;
+};
+
+export const updateCategory = async (id, data) => {
+  const response = await api.put(`/categories/${id}`, data);
+  return response.data;
+};
+
+export const createSubCategory = async (categoryId, data) => {
+  const response = await api.post(
+    `/categories/${categoryId}/subcategories`,
+    data
+  );
+  return response.data;
+};
+
+export const updateSubCategory = async (id, data) => {
+  const response = await api.put(`/subcategories/${id}`, data);
+  return response.data;
+};
+
+export const createBrand = async (data) => {
+  const response = await api.post('/brands', data);
+  return response.data;
+};
+
+export const updateBrand = async (id, data) => {
+  const response = await api.put(`/brands/${id}`, data);
   return response.data;
 };
 

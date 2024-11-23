@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import useSubCategories from '../hooks/useSubCategories';
+import useSubCategoriesByCategory from '../hooks/useSubCategoriesByCategory';
 import SelectField from './SelectField';
 
 const SubCategorySelect = ({ name, label, categoryId }) => {
-  const { data, isLoading } = useSubCategories(categoryId, {
+  const { data, isLoading } = useSubCategoriesByCategory(categoryId, {
     page: 0,
     size: 100,
   });

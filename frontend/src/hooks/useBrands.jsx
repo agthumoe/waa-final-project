@@ -3,7 +3,7 @@ import { getBrands } from '../api/api';
 
 function useBrands(params) {
   return useQuery({
-    queryKey: ['brands', 'fetch'],
+    queryKey: ['brands', 'fetch', params],
     queryFn: () => getBrands(params),
     initialData: { content: [], page: {} },
   });

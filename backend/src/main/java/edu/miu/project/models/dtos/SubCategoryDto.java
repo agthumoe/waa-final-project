@@ -8,4 +8,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class SubCategoryDto extends Dto {
     private String name;
+    private String categoryName;
 }
